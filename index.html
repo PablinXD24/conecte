@@ -10,7 +10,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <!-- Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Firebase SDK (Compat) -->
+    
+    <!-- Firebase SDKs (Compat) -->
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
     
@@ -196,8 +197,8 @@
             
             <div style="display: flex; align-items: center; gap: 1rem;">
                 <div id="connection-status-badge" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; background: rgba(30,41,59,0.8); padding: 0.35rem 0.85rem; border-radius: 999px; border: 1px solid var(--border);">
-                    <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #10b981;" id="sync-dot"></span>
-                    <span id="sync-text" style="color: var(--text-muted);">Sincronização Ativa</span>
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #f59e0b;" id="sync-dot"></span>
+                    <span id="sync-text" style="color: var(--text-muted);">Conectando ao Firebase...</span>
                 </div>
                 <button onclick="window.openHelpModal()" class="btn btn-secondary" style="padding: 0.5rem 0.85rem;">
                     <i class="fa-solid fa-circle-question"></i>
@@ -462,7 +463,7 @@
     <div id="toast-container" class="toast-box"></div>
 
     <script>
-        // --- MULTI-CHANNEL SYNC ENGINE (FIREBASE + LOCALSTORAGE FALLBACK) ---
+        // --- FIREBASE & HYBRID SYNC ENGINE ---
         let dbRef = null;
         let broadcastChannel = null;
         let currentRole = 'home';
@@ -502,12 +503,21 @@
 
         function initSyncEngine() {
             try {
+                // Sua configuração oficial do Firebase
                 const firebaseConfig = {
-                    databaseURL: "https://adscreen-sync-default-rtdb.firebaseio.com/"
+                    apiKey: "AIzaSyABnnz6XLEPdr8BqEOAdkNRrVVoGdVEzwA",
+                    authDomain: "rpg25-efb93.firebaseapp.com",
+                    databaseURL: "https://rpg25-efb93-default-rtdb.firebaseio.com",
+                    projectId: "rpg25-efb93",
+                    storageBucket: "rpg25-efb93.firebasestorage.app",
+                    messagingSenderId: "1083914328300",
+                    appId: "1:1083914328300:web:d6532d2dd37615a893edc9"
                 };
+
                 if (!firebase.apps.length) {
                     firebase.initializeApp(firebaseConfig);
                 }
+                
                 dbRef = firebase.database().ref('adscreen_sessions');
                 firebaseInitialized = true;
                 document.getElementById('sync-text').innerText = "Sincronização em Nuvem Ativa";
@@ -539,7 +549,7 @@
         }
 
         function publishData(token, payload) {
-            // 1. Grava no LocalStorage imediato
+            // 1. Grava no LocalStorage local
             localStorage.setItem('ad_screen_' + token, JSON.stringify(payload));
             
             // 2. Dispara pelo BroadcastChannel
@@ -547,16 +557,16 @@
                 broadcastChannel.postMessage({ token: token, payload: payload });
             }
 
-            // 3. Tenta salvar no Firebase Realtime Database
+            // 3. Salva no Firebase Realtime Database para sincronizar o celular com a TV em redes diferentes
             if (firebaseInitialized && dbRef) {
                 dbRef.child(token).set(payload).catch(err => {
-                    console.warn("Falha no envio via Firebase, operando via armazenamento local:", err);
+                    console.warn("Erro ao enviar dados para o Firebase:", err);
                 });
             }
         }
 
         function listenToData(token, callback) {
-            // Verifica local storage a cada 250ms para garantir resposta imediata em celulares
+            // Verifica o localStorage a cada 250ms
             const checkInterval = setInterval(() => {
                 const val = localStorage.getItem('ad_screen_' + token);
                 if (val) {
@@ -564,6 +574,7 @@
                 }
             }, 250);
 
+            // Ouve em tempo real as mudanças no Firebase
             let fbListener = null;
             if (firebaseInitialized && dbRef) {
                 fbListener = dbRef.child(token);
@@ -768,14 +779,14 @@
             transmitAd(ad);
         };
 
-        function transmitAd(ad) {
+    function transmitAd(ad) {
             if (!currentToken) {
-                window.showToast("Nenhuma tela conectada. Digite o código.", "error");
+                window.showToast("Nenhuma tela conectada. Insira o código da TV.", "error");
                 return;
             }
             try {
                 publishData(currentToken, ad);
-                window.showToast("Anúncio transmitido com sucesso!", "success");
+                window.showToast("Anúncio transmitido com sucesso para a tela!", "success");
             } catch (e) {
                 console.error(e);
                 window.showToast("Erro ao transmitir anúncio.", "error");
