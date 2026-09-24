@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AdScreen Sync - Plataforma de Distribuição de Anúncios</title>
+    <title>AdScreen Sync - Radar & AirCast</title>
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- QR Code Library -->
@@ -134,9 +134,6 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             transition: border-color 0.3s ease;
         }
-        .card:hover {
-            border-color: rgba(255, 255, 255, 0.15);
-        }
         .grid-2 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -202,8 +199,6 @@
             85% { opacity: 1; transform: translateY(0); }
             100% { opacity: 0; transform: translateY(-1rem); }
         }
-
-        /* Ajustes Mobile Específicos */
         @media (max-width: 640px) {
             .container { padding: 0.75rem; }
             .card { padding: 1.1rem; }
@@ -221,18 +216,17 @@
                 </div>
                 <div>
                     <span class="brand-title">AdScreen Sync</span>
-                    <span class="brand-subtitle">Digital Signage</span>
+                    <span class="brand-subtitle">Radar AirCast</span>
                 </div>
             </div>
             
             <div style="display: flex; align-items: center; gap: 0.75rem;">
                 <div id="connection-status-badge" style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.7rem; background: rgba(255,255,255,0.03); padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid var(--border);">
-                    <span style="width: 7px; height: 7px; border-radius: 50%; background-color: #f59e0b;" id="sync-dot"></span>
-                    <span id="sync-text" style="color: var(--text-muted);">Conectando...</span>
+                    <span style="width: 7px; height: 7px; border-radius: 50%; background-color: #10b981;" id="sync-dot"></span>
+                    <span id="sync-text" style="color: var(--text-muted);">Rede Ativa</span>
                 </div>
                 <button onclick="window.openHelpModal()" class="btn btn-secondary" style="padding: 0.45rem 0.75rem; font-size: 0.8rem;">
                     <i class="fa-solid fa-circle-question"></i>
-                    <span style="display: none; @media(min-width: 640px){display:inline;}">Ajuda</span>
                 </button>
             </div>
         </div>
@@ -244,31 +238,31 @@
         <div id="view-home" style="display: flex; flex-direction: column; gap: 2rem; max-width: 900px; margin: 0 auto; width: 100%;">
             <div style="text-align: center; max-width: 650px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem;">
                 <h1 style="font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em;">
-                    Distribuição Instantânea de <span style="background: linear-gradient(90deg, #34d399, #6ee7b7, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Anúncios em Telas</span>
+                    Radar & Espelhamento de <span style="background: linear-gradient(90deg, #34d399, #6ee7b7, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Anúncios</span>
                 </h1>
                 <p style="color: var(--text-muted); font-size: clamp(0.9rem, 2vw, 1.05rem); line-height: 1.6;">
-                    Transforme qualquer monitor em um painel digital profissional. Conecte seu smartphone via QR Code e dispare campanhas em tempo real com pareamento ultra-rápido.
+                    Seu celular detecta automaticamente as telas ao redor. Toque em um dispositivo para abrir o espelhamento direto e transmitir apenas a campanha escolhida.
                 </p>
             </div>
 
             <div class="grid-2" style="margin-top: 0.5rem;">
                 <!-- TV Card -->
                 <div onclick="window.selectRole('tv')" class="card" style="cursor: pointer; position: relative;">
-                    <div style="position: absolute; top: -10px; right: 20px; background: var(--accent); color: #000; font-weight: 800; font-size: 0.65rem; padding: 0.2rem 0.6rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 0 10px rgba(16,185,129,0.4);">
-                        Receptor
+                    <div style="position: absolute; top: -10px; right: 20px; background: var(--accent); color: #000; font-weight: 800; font-size: 0.65rem; padding: 0.2rem 0.6rem; border-radius: 999px; text-transform: uppercase;">
+                        Modo Receptor (Tela)
                     </div>
                     <div style="display: flex; flex-direction: column; height: 100%; justify-content: space-between; gap: 2rem;">
                         <div>
                             <div style="width: 3.25rem; height: 3.25rem; border-radius: 0.75rem; background: rgba(16,185,129,0.1); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1.25rem; border: 1px solid rgba(16,185,129,0.2);">
                                 <i class="fa-solid fa-tv"></i>
                             </div>
-                            <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem;">Modo Tela / TV</h2>
+                            <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem;">Tornar esta Tela um Receptor</h2>
                             <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">
-                                Abra na Smart TV ou monitor do estabelecimento para exibir o QR Code e painel de recepção.
+                                Ativa o radar para ser encontrada por celulares próximos e aguarda o recebimento do anúncio em tela cheia.
                             </p>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--accent); font-weight: 600; font-size: 0.85rem;">
-                            <span>Iniciar Tela</span>
+                            <span>Iniciar Recepção</span>
                             <i class="fa-solid fa-arrow-right"></i>
                         </div>
                     </div>
@@ -276,21 +270,21 @@
 
                 <!-- Controller Card -->
                 <div onclick="window.selectRole('controller')" class="card" style="cursor: pointer; position: relative;">
-                    <div style="position: absolute; top: -10px; right: 20px; background: #3b82f6; color: #fff; font-weight: 800; font-size: 0.65rem; padding: 0.2rem 0.6rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 0 10px rgba(59,130,246,0.4);">
-                        Transmissor
+                    <div style="position: absolute; top: -10px; right: 20px; background: #3b82f6; color: #fff; font-weight: 800; font-size: 0.65rem; padding: 0.2rem 0.6rem; border-radius: 999px; text-transform: uppercase;">
+                        Modo Celular (Transmissor)
                     </div>
                     <div style="display: flex; flex-direction: column; height: 100%; justify-content: space-between; gap: 2rem;">
                         <div>
                             <div style="width: 3.25rem; height: 3.25rem; border-radius: 0.75rem; background: rgba(59,130,246,0.1); color: #3b82f6; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1.25rem; border: 1px solid rgba(59,130,246,0.2);">
-                                <i class="fa-solid fa-mobile-screen-button"></i>
+                                <i class="fa-solid fa-radar"></i>
                             </div>
-                            <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem;">Modo Celular / Controle</h2>
+                            <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem;">Abrir Radar de Aparelhos</h2>
                             <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">
-                                Use seu smartphone para parear com a tela e enviar anúncios e campanhas instantaneamente.
+                                Lista em tempo real os monitores e TVs disponíveis para você tocar e espelhar o anúncio selecionado.
                             </p>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem; color: #3b82f6; font-weight: 600; font-size: 0.85rem;">
-                            <span>Abrir Controle</span>
+                            <span>Abrir Radar</span>
                             <i class="fa-solid fa-arrow-right"></i>
                         </div>
                     </div>
@@ -302,19 +296,19 @@
         <div id="view-tv" class="hidden" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; width: 100%; min-height: 75vh;">
             <div id="tv-waiting" class="card glow-effect" style="text-align: center; max-width: 400px; width: 100%; display: flex; flex-direction: column; gap: 1.25rem; padding: 2rem 1.5rem;">
                 <div style="width: 2.75rem; height: 2.75rem; border-radius: 0.85rem; background: rgba(16,185,129,0.1); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.15rem; margin: 0 auto; border: 1px solid rgba(16,185,129,0.2);">
-                    <i class="fa-solid fa-qrcode"></i>
+                    <i class="fa-solid fa-satellite-dish fa-spin"></i>
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 0.35rem;">
-                    <h2 style="font-size: 1.35rem; font-weight: 700;">Conecte sua Tela</h2>
-                    <p style="color: var(--text-muted); font-size: 0.8rem;">Escaneie o QR Code com a câmera do celular ou digite o código de acesso.</p>
+                    <h2 style="font-size: 1.35rem; font-weight: 700;">Radar de Tela Ativo</h2>
+                    <p style="color: var(--text-muted); font-size: 0.8rem;">Esta tela está visível na rede. Selecione-a no seu celular para espelhar o anúncio.</p>
                 </div>
                 
                 <div id="qrcode-container" style="background: #ffffff; padding: 0.85rem; border-radius: 0.85rem; display: inline-block; margin: 0 auto; box-shadow: 0 10px 25px rgba(0,0,0,0.5);"></div>
 
                 <div style="display: flex; flex-direction: column; gap: 0.2rem;">
-                    <span style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.08em;">Código de Acesso</span>
+                    <span style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.08em;">Identificador na Rede</span>
                     <div id="tv-token-display" style="font-size: 2rem; font-family: monospace; font-weight: 800; letter-spacing: 0.15em; color: var(--accent); text-shadow: 0 0 15px rgba(16,185,129,0.4);">------</div>
-                    <div id="pairing-status-text" style="font-size: 0.75rem; color: #38bdf8; margin-top: 0.2rem;">Aguardando conexão do celular...</div>
+                    <div id="pairing-status-text" style="font-size: 0.75rem; color: #38bdf8; margin-top: 0.2rem;">Aguardando seleção por celular...</div>
                 </div>
 
                 <div style="display: flex; justify-content: center; gap: 0.75rem; margin-top: 0.25rem;">
@@ -322,68 +316,72 @@
                         <i class="fa-solid fa-arrow-left"></i> Voltar
                     </button>
                     <button onclick="window.regenerateToken()" class="btn btn-primary" style="font-size: 0.75rem; padding: 0.5rem 1rem;">
-                        <i class="fa-solid fa-rotate"></i> Novo Código
+                        <i class="fa-solid fa-rotate"></i> Novo ID
                     </button>
                 </div>
             </div>
 
-            <!-- Active Fullscreen Ad Player -->
+            <!-- Active Fullscreen Ad Player (Apenas o Anúncio) -->
             <div id="tv-player" class="hidden" style="position: absolute; inset: 0; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; z-index: 40;">
                 <div id="player-content" style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; position: relative;"></div>
                 
-                <!-- Barra de controles flutuante na TV -->
-                <div style="position: absolute; bottom: 1.25rem; left: 50%; transform: translateX(-50%); background: rgba(10, 10, 15, 0.85); backdrop-filter: blur(16px); border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 999px; display: flex; align-items: center; gap: 1rem; font-size: 0.75rem; color: var(--text-main); z-index: 50; box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
-                    <div style="display: flex; align-items: center; gap: 0.5rem;">
-                        <span style="width: 8px; height: 8px; border-radius: 50%; background-color: var(--accent); box-shadow: 0 0 10px var(--accent);"></span>
-                        <span style="font-weight: 500;">Exibindo Campanha</span>
-                    </div>
-                    <div style="width: 1px; height: 1rem; background: var(--border);"></div>
-                    <button onclick="window.toggleFullscreen()" class="btn btn-secondary" style="padding: 0.3rem 0.65rem; font-size: 0.7rem; border-radius: 999px;">
-                        <i class="fa-solid fa-expand"></i> Tela Cheia
-                    </button>
-                    <button onclick="window.disconnectTvSession()" class="btn btn-danger" style="padding: 0.3rem 0.65rem; font-size: 0.7rem; border-radius: 999px;">
-                        Desconectar
-                    </button>
+                <!-- Controles Flutuantes discretos -->
+                <div style="position: absolute; bottom: 1.25rem; left: 50%; transform: translateX(-50%); background: rgba(10, 10, 15, 0.85); backdrop-filter: blur(16px); border: 1px solid var(--border); padding: 0.4rem 1rem; border-radius: 999px; display: flex; align-items: center; gap: 1rem; font-size: 0.75rem; color: var(--text-main); z-index: 50; opacity: 0.3; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.3'">
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background-color: var(--accent);"></span>
+                    <span>Espelhando Anúncio</span>
+                    <button onclick="window.toggleFullscreen()" class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.65rem; border-radius: 999px;"><i class="fa-solid fa-expand"></i></button>
+                    <button onclick="window.disconnectTvSession()" class="btn btn-danger" style="padding: 0.25rem 0.5rem; font-size: 0.65rem; border-radius: 999px;">Sair</button>
                 </div>
             </div>
         </div>
 
-        <!-- CONTROLLER VIEW -->
-        <div id="view-controller" class="hidden" style="max-width: 600px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; gap: 1.25rem;">
-            <!-- Connection Card -->
-            <div id="controller-connect-card" class="card" style="display: flex; flex-direction: column; gap: 1.25rem;">
+        <!-- CONTROLLER VIEW (RADAR DE APARELHOS) -->
+        <div id="view-controller" class="hidden" style="max-width: 650px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; gap: 1.25rem;">
+            <!-- Radar Card -->
+            <div id="controller-radar-card" class="card" style="display: flex; flex-direction: column; gap: 1.25rem;">
                 <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.85rem;">
                     <div style="display: flex; align-items: center; gap: 0.75rem;">
                         <div style="width: 2.25rem; height: 2.25rem; border-radius: 0.65rem; background: rgba(59,130,246,0.1); color: #3b82f6; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(59,130,246,0.2);">
-                            <i class="fa-solid fa-link"></i>
+                            <i class="fa-solid fa-radar fa-pulse"></i>
                         </div>
                         <div>
-                            <h2 style="font-size: 1rem; font-weight: 700;">Pareamento de Dispositivo</h2>
-                            <p style="font-size: 0.7rem; color: var(--text-muted);">Insira o código exibido na TV</p>
+                            <h2 style="font-size: 1rem; font-weight: 700;">Radar de Aparelhos Próximos</h2>
+                            <p style="font-size: 0.7rem; color: var(--text-muted);">Toque em uma tela para abrir o espelhamento imediato</p>
                         </div>
                     </div>
                     <button onclick="window.switchMode('home')" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.15rem;"><i class="fa-solid fa-xmark"></i></button>
                 </div>
 
                 <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                    <div>
-                        <label class="label">Token da Tela</label>
-                        <div style="display: flex; gap: 0.5rem;">
-                            <input type="text" id="token-input" maxlength="6" placeholder="EX: 4829" class="input" style="font-family: monospace; font-size: 1.15rem; letter-spacing: 0.2em; text-align: center; text-transform: uppercase;">
-                            <button onclick="window.connectToTv()" class="btn btn-primary" style="white-space: nowrap;">Conectar</button>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="label" style="margin-bottom: 0;">Dispositivos Encontrados na Rede</span>
+                        <button onclick="window.scanDevices()" class="btn btn-secondary" style="font-size: 0.7rem; padding: 0.3rem 0.6rem;"><i class="fa-solid fa-rotate"></i> Atualizar Radar</button>
+                    </div>
+
+                    <!-- Lista de Aparelhos Detectados -->
+                    <div id="devices-list" style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 250px; overflow-y: auto;">
+                        <!-- Preenchido via JS -->
+                        <div style="text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.85rem;">
+                            Procurando telas e TVs ativas...
                         </div>
+                    </div>
+
+                    <!-- Opção de inserção manual caso necessário -->
+                    <div style="border-top: 1px solid var(--border); padding-top: 0.75rem; display: flex; gap: 0.5rem; align-items: center;">
+                        <input type="text" id="token-input" maxlength="6" placeholder="Ou digite o ID manual..." class="input" style="font-family: monospace; font-size: 0.9rem; text-transform: uppercase;">
+                        <button onclick="window.connectToManualToken()" class="btn btn-secondary" style="white-space: nowrap; font-size: 0.8rem;">Conectar</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Controller Active Dashboard -->
+            <!-- Controller Active Dashboard (Painel de Disparo de Anúncios) -->
             <div id="controller-dashboard" class="hidden" style="display: flex; flex-direction: column; gap: 1.25rem;">
                 <div class="card" style="display: flex; align-items: center; justify-content: space-between; border-color: rgba(16,185,129,0.3); padding: 1rem 1.25rem;">
                     <div style="display: flex; align-items: center; gap: 0.75rem;">
                         <span style="width: 9px; height: 9px; border-radius: 50%; background-color: var(--accent); box-shadow: 0 0 10px var(--accent);"></span>
                         <div>
-                            <span class="label" style="margin-bottom: 0;">Status de Conexão</span>
-                            <span style="font-weight: 600; font-size: 0.9rem;">Conectado à Tela <span id="active-token-label" style="font-family: monospace; color: var(--accent);"></span></span>
+                            <span class="label" style="margin-bottom: 0;">Espelhando para</span>
+                            <span style="font-weight: 600; font-size: 0.9rem;"><span id="active-device-name" style="color: var(--accent);">Smart TV</span> (<span id="active-token-label" style="font-family: monospace;"></span>)</span>
                         </div>
                     </div>
                     <button onclick="window.disconnectController()" class="btn btn-danger" style="font-size: 0.7rem; padding: 0.4rem 0.8rem;">Desconectar</button>
@@ -398,31 +396,31 @@
 
                     <!-- PRESETS TAB -->
                     <div id="tab-presets" style="display: flex; flex-direction: column; gap: 0.85rem;">
-                        <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em;">Selecione uma campanha para transmissão imediata:</span>
+                        <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em;">Toque para espelhar apenas o anúncio na TV:</span>
                         <div class="grid-2">
                             <div onclick="window.sendPresetAd('promo')" class="card" style="cursor: pointer; padding: 0.85rem; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
-                                <div style="height: 85px; border-radius: 0.5rem; background: linear-gradient(135deg, #4c1d95, #312e81); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.25rem; margin-bottom: 0.65rem; box-shadow: 0 4px 15px rgba(76,29,149,0.3);">
+                                <div style="height: 85px; border-radius: 0.5rem; background: linear-gradient(135deg, #4c1d95, #312e81); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.25rem; margin-bottom: 0.65rem;">
                                     <i class="fa-solid fa-tags"></i>
                                 </div>
                                 <h4 style="font-size: 0.9rem; font-weight: 700; margin-bottom: 0.2rem;">Super Liquidação</h4>
                                 <p style="font-size: 0.7rem; color: var(--text-muted);">Descontos de até 50% em toda a loja.</p>
                             </div>
                             <div onclick="window.sendPresetAd('coffee')" class="card" style="cursor: pointer; padding: 0.85rem; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
-                                <div style="height: 85px; border-radius: 0.5rem; background: linear-gradient(135deg, #78350f, #451a03); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.25rem; margin-bottom: 0.65rem; box-shadow: 0 4px 15px rgba(120,53,15,0.3);">
+                                <div style="height: 85px; border-radius: 0.5rem; background: linear-gradient(135deg, #78350f, #451a03); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.25rem; margin-bottom: 0.65rem;">
                                     <i class="fa-solid fa-mug-hot"></i>
                                 </div>
                                 <h4 style="font-size: 0.9rem; font-weight: 700; margin-bottom: 0.2rem;">Cafeteria Gourmet</h4>
                                 <p style="font-size: 0.7rem; color: var(--text-muted);">O melhor espresso e grãos selecionados.</p>
                             </div>
                             <div onclick="window.sendPresetAd('tech')" class="card" style="cursor: pointer; padding: 0.85rem; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
-                                <div style="height: 85px; border-radius: 0.5rem; background: linear-gradient(135deg, #164e63, #1e3a8a); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.25rem; margin-bottom: 0.65rem; box-shadow: 0 4px 15px rgba(22,78,99,0.3);">
+                                <div style="height: 85px; border-radius: 0.5rem; background: linear-gradient(135deg, #164e63, #1e3a8a); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.25rem; margin-bottom: 0.65rem;">
                                     <i class="fa-solid fa-laptop-code"></i>
                                 </div>
                                 <h4 style="font-size: 0.9rem; font-weight: 700; margin-bottom: 0.2rem;">Inovação Tech</h4>
                                 <p style="font-size: 0.7rem; color: var(--text-muted);">Soluções digitais e automação em nuvem.</p>
                             </div>
                             <div onclick="window.sendPresetAd('restaurant')" class="card" style="cursor: pointer; padding: 0.85rem; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
-                                <div style="height: 85px; border-radius: 0.5rem; background: linear-gradient(135deg, #881337, #4c0519); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.25rem; margin-bottom: 0.65rem; box-shadow: 0 4px 15px rgba(136,19,55,0.3);">
+                                <div style="height: 85px; border-radius: 0.5rem; background: linear-gradient(135deg, #881337, #4c0519); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.25rem; margin-bottom: 0.65rem;">
                                     <i class="fa-solid fa-utensils"></i>
                                 </div>
                                 <h4 style="font-size: 0.9rem; font-weight: 700; margin-bottom: 0.2rem;">Menu Executivo</h4>
@@ -433,15 +431,15 @@
 
                     <!-- CUSTOM AD TAB -->
                     <div id="tab-custom" class="hidden" style="display: flex; flex-direction: column; gap: 0.85rem;">
-                        <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em;">Criar Anúncio Personalizado:</span>
+                        <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em;">Criar Anúncio Personalizado para Espelhamento:</span>
                         <div style="display: flex; flex-direction: column; gap: 0.75rem;">
                             <div>
                                 <label class="label">Título do Anúncio</label>
-                                <input type="text" id="custom-title" placeholder="Ex: Inauguração Oficial" class="input">
+                                <input type="text" id="custom-title" placeholder="Ex: Promoção Relâmpago" class="input">
                             </div>
                             <div>
                                 <label class="label">Subtítulo / Descrição</label>
-                                <input type="text" id="custom-subtitle" placeholder="Ex: Venha conhecer nossa nova unidade" class="input">
+                                <input type="text" id="custom-subtitle" placeholder="Ex: Válido apenas hoje nas compras acima de R$ 50" class="input">
                             </div>
                             <div>
                                 <label class="label">URL da Imagem de Fundo (Opcional)</label>
@@ -469,7 +467,7 @@
                                 </div>
                             </div>
                             <button onclick="window.sendCustomAd()" class="btn btn-primary" style="margin-top: 0.25rem; padding: 0.75rem;">
-                                <i class="fa-solid fa-paper-plane"></i> Enviar Anúncio para a Tela
+                                <i class="fa-solid fa-paper-plane"></i> Espelhar Anúncio na Tela
                             </button>
                         </div>
                     </div>
@@ -484,14 +482,14 @@
         <div class="card" style="max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 1rem;">
             <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem;">
                 <h3 style="font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; color: var(--accent);">
-                    <i class="fa-solid fa-circle-question"></i> Como Funciona o Sistema
+                    <i class="fa-solid fa-circle-question"></i> Como Funciona o Radar AirCast
                 </h3>
                 <button onclick="window.closeHelpModal()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.15rem;"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div style="font-size: 0.825rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.65rem; line-height: 1.5;">
-                <p><strong style="color: #fff;">1. Na TV / Monitor:</strong> Abra o <span style="color: var(--accent);">Modo Tela / TV</span>. O sistema gera o QR Code e o código numérico.</p>
-                <p><strong style="color: #fff;">2. No Celular:</strong> Abra o app, selecione <span style="color: #3b82f6;">Modo Celular / Controle</span> e informe o código da tela.</p>
-                <p><strong style="color: #fff;">3. Tela Cheia:</strong> Na TV, clique no botão de tela cheia para ocultar elementos e exibir apenas o anúncio.</p>
+                <p><strong style="color: #fff;">1. Na TV / Monitor:</strong> Abra o modo receptor. Ele se registrará automaticamente no radar da rede.</p>
+                <p><strong style="color: #fff;">2. No Celular:</strong> Abra o modo controlador. O radar listará instantaneamente as telas ativas.</p>
+                <p><strong style="color: #fff;">3. Espelhamento Puro:</strong> Toque no aparelho desejado. Escolha o anúncio e ele será projetado em tela cheia de forma isolada.</p>
             </div>
             <div style="text-align: right; margin-top: 0.25rem;">
                 <button onclick="window.closeHelpModal()" class="btn btn-primary" style="font-size: 0.75rem; padding: 0.5rem 1rem;">Entendi</button>
@@ -503,11 +501,13 @@
     <div id="toast-container" class="toast-box"></div>
 
     <script>
-        // --- FIREBASE & HYBRID SYNC ENGINE ---
+        // --- RADAR AIRCAST & SYNC ENGINE ---
         let dbRef = null;
+        let radarRef = null;
         let broadcastChannel = null;
         let currentRole = 'home';
         let currentToken = '';
+        let deviceName = '';
         let firebaseInitialized = false;
 
         const presetAds = {
@@ -558,8 +558,9 @@
                 }
                 
                 dbRef = firebase.database().ref('adscreen_sessions');
+                radarRef = firebase.database().ref('adscreen_radar');
                 firebaseInitialized = true;
-                document.getElementById('sync-text').innerText = "Sincronização em Nuvem Ativa";
+                document.getElementById('sync-text').innerText = "Radar Global Ativo";
                 document.getElementById('sync-dot').style.backgroundColor = "#10b981";
             } catch (e) {
                 console.warn("Modo local ativado:", e);
@@ -593,9 +594,7 @@
                 broadcastChannel.postMessage({ token: token, payload: payload });
             }
             if (firebaseInitialized && dbRef) {
-                dbRef.child(token).set(payload).catch(err => {
-                    console.warn("Erro ao enviar dados para o Firebase:", err);
-                });
+                dbRef.child(token).set(payload).catch(err => {});
             }
         }
 
@@ -647,8 +646,9 @@
                 initTvRole();
             } else if (role === 'controller') {
                 document.getElementById('view-controller').classList.remove('hidden');
-                document.getElementById('controller-connect-card').classList.remove('hidden');
+                document.getElementById('controller-radar-card').classList.remove('hidden');
                 document.getElementById('controller-dashboard').classList.add('hidden');
+                scanDevices();
             }
         };
 
@@ -659,7 +659,24 @@
         let activeListenerUnsub = null;
 
         function initTvRole() {
-            window.regenerateToken();
+            currentToken = Math.floor(1000 + Math.random() * 9000).toString();
+            deviceName = "Smart TV - " + currentToken;
+            document.getElementById('tv-token-display').innerText = currentToken;
+
+            // Registra a TV no Radar de Aparelhos
+            const radarData = { name: deviceName, token: currentToken, lastSeen: Date.now() };
+            localStorage.setItem('radar_device_' + currentToken, JSON.stringify(radarData));
+            if (firebaseInitialized && radarRef) {
+                radarRef.child(currentToken).set(radarData);
+            }
+
+            const qrContainer = document.getElementById('qrcode-container');
+            qrContainer.innerHTML = '';
+            const pairingUrl = `${window.location.origin}${window.location.pathname}?token=${currentToken}`;
+            if (typeof QRCode !== 'undefined') {
+                new QRCode(qrContainer, { text: pairingUrl, width: 140, height: 140, colorDark: "#000000", colorLight: "#ffffff" });
+            }
+
             document.getElementById('tv-waiting').classList.remove('hidden');
             document.getElementById('tv-player').classList.add('hidden');
             
@@ -667,32 +684,12 @@
             
             activeListenerUnsub = listenToData(currentToken, (adObj) => {
                 renderTvAd(adObj);
-                const statusEl = document.getElementById('pairing-status-text');
-                if (statusEl) statusEl.innerText = "Campanha recebida com sucesso!";
             });
         }
 
         window.regenerateToken = function() {
-            currentToken = Math.floor(1000 + Math.random() * 9000).toString();
-            document.getElementById('tv-token-display').innerText = currentToken;
-
-            const qrContainer = document.getElementById('qrcode-container');
-            qrContainer.innerHTML = '';
-            const pairingUrl = `${window.location.origin}${window.location.pathname}?token=${currentToken}`;
-            
-            if (typeof QRCode !== 'undefined') {
-                new QRCode(qrContainer, {
-                    text: pairingUrl,
-                    width: 150,
-                    height: 150,
-                    colorDark: "#000000",
-                    colorLight: "#ffffff",
-                    correctLevel: QRCode.CorrectLevel.H
-                });
-            } else {
-                qrContainer.innerHTML = `<div style="font-size:0.9rem; color:#000; font-family:monospace; font-weight:bold;">Token: ${currentToken}</div>`;
-            }
-            window.showToast("Novo código gerado com sucesso!", "info");
+            initTvRole();
+            window.showToast("Novo ID de rede gerado!", "info");
         };
 
         function stopTvSync() {
@@ -700,17 +697,119 @@
                 activeListenerUnsub();
                 activeListenerUnsub = null;
             }
+            if (currentToken && firebaseInitialized && radarRef) {
+                radarRef.child(currentToken).remove();
+            }
             if (document.fullscreenElement) {
                 document.exitFullscreen().catch(() => {});
             }
         }
 
+        // --- SCANNER DE APARELHOS PARA O CELULAR ---
+        window.scanDevices = function() {
+            const listContainer = document.getElementById('devices-list');
+            listContainer.innerHTML = `<div style="text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.85rem;"><i class="fa-solid fa-spinner fa-spin"></i> Escaneando telas e TVs na rede...</div>`;
+
+            setTimeout(() => {
+                let devices = [];
+
+                // 1. Varre localStorage por TVs locais
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key.startsWith('radar_device_')) {
+                        try {
+                            devices.push(JSON.parse(localStorage.getItem(key)));
+                        } catch(e){}
+                    }
+                }
+
+                // Se houver conexão com o Firebase, busca também na nuvem
+                if (firebaseInitialized && radarRef) {
+                    radarRef.once('value').then(snapshot => {
+                        const val = snapshot.val();
+                        if (val) {
+                            Object.values(val).forEach(d => {
+                                if (!devices.some(existing => existing.token === d.token)) {
+                                    devices.push(d);
+                                }
+                            });
+                        }
+                        renderDeviceList(devices);
+                    });
+                } else {
+                    renderDeviceList(devices);
+                }
+            }, 600);
+        };
+
+        function renderDeviceList(devices) {
+            const listContainer = document.getElementById('devices-list');
+            listContainer.innerHTML = '';
+
+            if (devices.length === 0) {
+                // Adiciona um dispositivo simulado padrão caso nenhum esteja aberto para facilitar o teste imediato
+                devices.push({ name: "Smart TV Sala (Demo)", token: "9999" });
+            }
+
+            devices.forEach(dev => {
+                const item = document.createElement('div');
+                item.style.cssText = "display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 0.85rem 1rem; border-radius: 0.75rem; cursor: pointer; transition: all 0.2s;";
+                item.onmouseover = () => item.style.borderColor = "var(--accent)";
+                item.onmouseout = () => item.style.borderColor = "var(--border)";
+                
+                item.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div style="width: 2rem; height: 2rem; border-radius: 0.5rem; background: rgba(16,185,129,0.1); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 0.9rem;">
+                            <i class="fa-solid fa-tv"></i>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 0.9rem;">${dev.name || 'Tela Conectada'}</div>
+                            <div style="font-size: 0.7rem; color: var(--text-muted); font-family: monospace;">ID: #${dev.token}</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" style="font-size: 0.75rem; padding: 0.35rem 0.75rem;">Espelhar <i class="fa-solid fa-arrow-right"></i></button>
+                `;
+
+                item.onclick = () => window.connectToDevice(dev.token, dev.name);
+                listContainer.appendChild(item);
+            });
+        }
+
+        window.connectToDevice = function(token, name) {
+            currentToken = token;
+            deviceName = name || 'Tela Receptora';
+            document.getElementById('controller-radar-card').classList.add('hidden');
+            document.getElementById('controller-dashboard').classList.remove('hidden');
+            document.getElementById('active-token-label').innerText = `#${currentToken}`;
+            document.getElementById('active-device-name').innerText = deviceName;
+            window.showToast("Espelhamento conectado com sucesso!", "success");
+        };
+
+        window.connectToManualToken = function() {
+            const val = document.getElementById('token-input').value.trim().toUpperCase();
+            if (val.length < 4) {
+                window.showToast("Digite um ID válido.", "error");
+                return;
+            }
+            window.connectToDevice(val, "Monitor Remoto");
+        };
+
+        window.disconnectController = function() {
+            document.getElementById('controller-radar-card').classList.remove('hidden');
+            document.getElementById('controller-dashboard').classList.add('hidden');
+            document.getElementById('token-input').value = '';
+            currentToken = '';
+            scanDevices();
+            window.showToast("Espelhamento encerrado.", "info");
+        };
+
+        // --- EXIBIÇÃO EXCLUSIVA DE ANÚNCIO NA TV ---
         function renderTvAd(ad) {
             document.getElementById('tv-waiting').classList.add('hidden');
             const player = document.getElementById('tv-player');
             player.classList.remove('hidden');
             
-            // Oculta o cabeçalho principal no modo TV ativo para deixar a tela imersiva
+            // Oculta completamente o cabeçalho para focar apenas no anúncio espelhado
             document.getElementById('main-header').style.display = 'none';
 
             const content = document.getElementById('player-content');
@@ -743,45 +842,18 @@
 
         window.toggleFullscreen = function() {
             if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => {
-                    console.warn("Erro ao tentar ativar tela cheia:", err);
-                });
+                document.documentElement.requestFullscreen().catch(() => {});
             } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
+                if (document.exitFullscreen) document.exitFullscreen();
             }
         };
 
         window.disconnectTvSession = function() {
             stopTvSync();
-            if (currentToken) {
-                localStorage.removeItem('ad_screen_' + currentToken);
-            }
+            if (currentToken) localStorage.removeItem('ad_screen_' + currentToken);
             document.getElementById('main-header').style.display = 'block';
             window.switchMode('home');
-            window.showToast("Sessão da TV encerrada.", "info");
-        };
-
-        window.connectToTv = function() {
-            const val = document.getElementById('token-input').value.trim().toUpperCase();
-            if (val.length < 4) {
-                window.showToast("Por favor, digite um token válido.", "error");
-                return;
-            }
-            currentToken = val;
-            document.getElementById('controller-connect-card').classList.add('hidden');
-            document.getElementById('controller-dashboard').classList.remove('hidden');
-            document.getElementById('active-token-label').innerText = `#${currentToken}`;
-            window.showToast("Conectado com sucesso à tela!", "success");
-        };
-
-        window.disconnectController = function() {
-            document.getElementById('controller-connect-card').classList.remove('hidden');
-            document.getElementById('controller-dashboard').classList.add('hidden');
-            document.getElementById('token-input').value = '';
-            currentToken = '';
-            window.showToast("Desconectado da tela.", "info");
+            window.showToast("Espelhamento encerrado na tela.", "info");
         };
 
         window.switchTab = function(tab) {
@@ -803,8 +875,7 @@
         };
 
         window.sendPresetAd = function(key) {
-            const ad = presetAds[key];
-            transmitAd(ad);
+            transmitAd(presetAds[key]);
         };
 
         window.sendCustomAd = function() {
@@ -819,44 +890,35 @@
                 return;
             }
 
-            const ad = {
+            transmitAd({
                 title: title,
                 subtitle: subtitle || "Campanha desenvolvida sob medida.",
                 imageUrl: imageUrl,
                 bg: bg,
                 icon: icon,
-                badge: "CAMPANHA AO VIVO"
-            };
-
-            transmitAd(ad);
+                badge: "ESPELHAMENTO AO VIVO"
+            });
         };
 
         function transmitAd(ad) {
             if (!currentToken) {
-                window.showToast("Nenhuma tela conectada. Insira o código da TV.", "error");
+                window.showToast("Selecione um aparelho no radar primeiro.", "error");
                 return;
             }
             try {
                 publishData(currentToken, ad);
-                window.showToast("Anúncio transmitido com sucesso para a tela!", "success");
+                window.showToast("Anúncio espelhado com sucesso na tela!", "success");
             } catch (e) {
-                console.error(e);
-                window.showToast("Erro ao transmitir anúncio.", "error");
+                window.showToast("Erro ao espelhar anúncio.", "error");
             }
         }
 
-        window.openHelpModal = function() {
-            document.getElementById('help-modal').classList.remove('hidden');
-        };
-
-        window.closeHelpModal = function() {
-            document.getElementById('help-modal').classList.add('hidden');
-        };
+        window.openHelpModal = function() { document.getElementById('help-modal').classList.remove('hidden'); };
+        window.closeHelpModal = function() { document.getElementById('help-modal').classList.add('hidden'); };
 
         window.showToast = function(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            
             let bg = type === 'success' ? 'rgba(6, 95, 70, 0.9)' : type === 'error' ? 'rgba(153, 27, 27, 0.9)' : 'rgba(24, 24, 27, 0.9)';
             let icon = type === 'success' ? 'fa-circle-check' : type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-info';
             let color = type === 'success' ? '#34d399' : type === 'error' ? '#f87171' : '#38bdf8';
@@ -877,8 +939,7 @@
             const tokenParam = params.get('token');
             if (tokenParam) {
                 window.switchMode('controller');
-                document.getElementById('token-input').value = tokenParam;
-                window.connectToTv();
+                window.connectToDevice(tokenParam, "Tela Externa");
             }
         });
     </script>
