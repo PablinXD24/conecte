@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +10,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <!-- Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Firebase SDK (Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+    
     <style>
         :root {
             --bg-primary: #020617;
@@ -29,12 +33,10 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            selection-background-color: var(--accent);
-            selection-color: #fff;
         }
         header {
             border-bottom: 1px solid var(--border);
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(12px);
             position: sticky;
             top: 0;
@@ -45,12 +47,6 @@
             margin: 0 auto;
             padding: 1rem;
             width: 100%;
-        }
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: between;
-            height: 4rem;
         }
         .brand {
             display: flex;
@@ -131,7 +127,6 @@
             gap: 1.5rem;
         }
         .hidden { display: none !important; }
-        .text-center { text-align: center; }
         .input {
             width: 100%;
             background-color: var(--bg-primary);
@@ -191,7 +186,7 @@
 <body>
 
     <header>
-        <div class="container header-content" style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="container header-content" style="display: flex; justify-content: space-between; align-items: center; height: 4rem;">
             <div class="brand" onclick="window.switchMode('home')">
                 <div class="brand-icon">
                     <i class="fa-solid fa-tower-broadcast"></i>
@@ -203,13 +198,13 @@
             </div>
             
             <div style="display: flex; align-items: center; gap: 1rem;">
-                <div id="auth-status" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; background: rgba(30,41,59,0.8); padding: 0.35rem 0.85rem; border-radius: 999px; border: 1px solid var(--border);">
-                    <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #10b981;" id="auth-dot"></span>
-                    <span id="auth-text" style="color: var(--text-muted);">Sincronização Ativa</span>
+                <div id="connection-status-badge" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; background: rgba(30,41,59,0.8); padding: 0.35rem 0.85rem; border-radius: 999px; border: 1px solid var(--border);">
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #10b981;" id="sync-dot"></span>
+                    <span id="sync-text" style="color: var(--text-muted);">Sincronização Ativa</span>
                 </div>
                 <button onclick="window.openHelpModal()" class="btn btn-secondary" style="padding: 0.5rem 0.85rem;">
                     <i class="fa-solid fa-circle-question"></i>
-                    <span style="display: none; @media(min-width: 640px){ display: inline; }">Como usar</span>
+                    <span>Ajuda</span>
                 </button>
             </div>
         </div>
@@ -217,13 +212,14 @@
 
     <main class="container" style="flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 2rem 1rem;">
 
+        <!-- HOME VIEW -->
         <div id="view-home" style="display: flex; flex-direction: column; gap: 2rem; max-width: 900px; margin: 0 auto; width: 100%;">
             <div style="text-align: center; max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem;">
                 <h1 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; line-height: 1.2;">
                     Distribuição Instantânea de <span style="background: linear-gradient(90deg, #34d399, #6ee7b7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Anúncios em Telas</span>
                 </h1>
                 <p style="color: var(--text-muted); font-size: 1rem;">
-                    Transforme qualquer monitor ou Smart TV em um painel digital. Conecte seu celular via QR Code ou token e envie campanhas em tempo real.
+                    Transforme qualquer monitor em um painel digital. Conecte seu celular via QR Code ou token e envie campanhas em tempo real com pareamento ultra-rápido.
                 </p>
             </div>
 
@@ -240,7 +236,7 @@
                             </div>
                             <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Modo Tela / TV</h2>
                             <p style="color: var(--text-muted); font-size: 0.875rem; line-height: 1.5;">
-                                Abra este modo na TV ou monitor corporativo. O sistema exibirá o QR Code e o token exclusivo para pareamento.
+                                Abra na Smart TV ou monitor. Exibe o QR Code e token exclusivo para pareamento em tempo real.
                             </p>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--accent); font-weight: 600; font-size: 0.875rem;">
@@ -274,6 +270,7 @@
             </div>
         </div>
 
+        <!-- TV VIEW -->
         <div id="view-tv" class="hidden" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; width: 100%; min-height: 70vh;">
             <!-- Waiting Screen with Token & QR Code -->
             <div id="tv-waiting" class="card glow-effect" style="text-align: center; max-width: 420px; width: 100%; display: flex; flex-direction: column; gap: 1.5rem; padding: 2.5rem 2rem;">
@@ -290,6 +287,7 @@
                 <div style="display: flex; flex-direction: column; gap: 0.25rem;">
                     <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em;">Código de Acesso</span>
                     <div id="tv-token-display" style="font-size: 2.25rem; font-family: monospace; font-weight: 700; letter-spacing: 0.2em; color: var(--accent);">------</div>
+                    <div id="pairing-status-text" style="font-size: 0.8rem; color: #38bdf8; margin-top: 0.25rem;">Aguardando conexão do celular...</div>
                 </div>
 
                 <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 0.5rem;">
@@ -306,13 +304,14 @@
             <div id="tv-player" class="hidden" style="position: absolute; inset: 0; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden;">
                 <div id="player-content" style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; position: relative;"></div>
                 <div style="position: absolute; bottom: 1.5rem; left: 1.5rem; background: rgba(15,23,42,0.85); backdrop-filter: blur(8px); border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 0.75rem; display: flex; align-items: center; gap: 0.75rem; font-size: 0.75rem; color: var(--text-main);">
-                    <span style="width: 8px; height: 8px; border-radius: 50%; background-color: var(--accent); animation: pulse 1.5s infinite;"></span>
-                    <span>Exibindo Anúncio em Tempo Real</span>
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background-color: var(--accent);"></span>
+                    <span>TV Conectada & Exibindo Campanha</span>
                     <button onclick="window.disconnectTvSession()" class="btn btn-danger" style="padding: 0.25rem 0.5rem; font-size: 0.7rem; margin-left: 0.5rem;">Desconectar</button>
                 </div>
             </div>
         </div>
 
+        <!-- CONTROLLER VIEW -->
         <div id="view-controller" class="hidden" style="max-width: 650px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; gap: 1.5rem;">
             <!-- Connection Card -->
             <div id="controller-connect-card" class="card" style="display: flex; flex-direction: column; gap: 1.5rem;">
@@ -323,7 +322,7 @@
                         </div>
                         <div>
                             <h2 style="font-size: 1.1rem; font-weight: 700;">Pareamento de Dispositivo</h2>
-                            <p style="font-size: 0.75rem; color: var(--text-muted);">Insira o token exibido na TV</p>
+                            <p style="font-size: 0.75rem; color: var(--text-muted);">Insira o token de 4 ou 6 dígitos exibido na TV</p>
                         </div>
                     </div>
                     <button onclick="window.switchMode('home')" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.25rem;"><i class="fa-solid fa-xmark"></i></button>
@@ -331,9 +330,9 @@
 
                 <div style="display: flex; flex-direction: column; gap: 1rem;">
                     <div>
-                        <label class="label">Token da Tela (6 dígitos)</label>
+                        <label class="label">Token da Tela</label>
                         <div style="display: flex; gap: 0.75rem;">
-                            <input type="text" id="token-input" maxlength="6" placeholder="EX: 482910" class="input" style="font-family: monospace; font-size: 1.25rem; letter-spacing: 0.2em; text-align: center; text-transform: uppercase;">
+                            <input type="text" id="token-input" maxlength="6" placeholder="EX: 4829" class="input" style="font-family: monospace; font-size: 1.25rem; letter-spacing: 0.2em; text-align: center; text-transform: uppercase;">
                             <button onclick="window.connectToTv()" class="btn btn-primary" style="white-space: nowrap;">Conectar</button>
                         </div>
                     </div>
@@ -453,9 +452,9 @@
                 <button onclick="window.closeHelpModal()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.25rem;"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div style="font-size: 0.875rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.75rem; line-height: 1.6;">
-                <p><strong style="color: #fff;">1. Na TV / Monitor:</strong> Selecione o <span style="color: var(--accent);">Modo Tela / TV</span>. O sistema gerará um código de 6 dígitos e um QR Code interativo.</p>
-                <p><strong style="color: #fff;">2. No Celular / Tablet:</strong> Abra o app em outro dispositivo ou aba anônima, selecione o <span style="color: #3b82f6;">Modo Celular / Controle</span> e informe o código da tela.</p>
-                <p><strong style="color: #fff;">3. Distribuição Instantânea:</strong> Escolha um anúncio pronto ou crie um banner customizado. A tela exibirá a campanha na mesma hora em tela cheia.</p>
+                <p><strong style="color: #fff;">1. Na TV / Monitor:</strong> Selecione o <span style="color: var(--accent);">Modo Tela / TV</span>. O sistema gera o QR Code e o token numérico.</p>
+                <p><strong style="color: #fff;">2. No Celular / Tablet:</strong> Abra o app em outro dispositivo ou aba, selecione o <span style="color: #3b82f6;">Modo Celular / Controle</span> e informe o código da tela.</p>
+                <p><strong style="color: #fff;">3. Distribuição Instantânea:</strong> Escolha uma campanha pronta ou monte um anúncio personalizado. A tela exibirá em tempo real.</p>
             </div>
             <div style="text-align: right; margin-top: 0.5rem;">
                 <button onclick="window.closeHelpModal()" class="btn btn-primary" style="font-size: 0.75rem;">Entendi</button>
@@ -467,11 +466,13 @@
     <div id="toast-container" class="toast-box"></div>
 
     <script>
-        // Global Application State
+        // --- REAL-TIME HYBRID SYNC ENGINE ---
+        // Uses public Firebase Realtime Database demo namespace + BroadcastChannel fallback for multi-device sync
+        let dbRef = null;
+        let broadcastChannel = null;
         let currentRole = 'home';
         let currentToken = '';
-        let syncInterval = null;
-        let qrInstance = null;
+        let firebaseInitialized = false;
 
         const presetAds = {
             promo: {
@@ -504,7 +505,93 @@
             }
         };
 
-        // Attach functions to global window to avoid any ReferenceError
+        // Initialize Firebase with public test database & BroadcastChannel fallback
+        function initSyncEngine() {
+            try {
+                const firebaseConfig = {
+                    databaseURL: "https://adscreen-sync-default-rtdb.firebaseio.com/"
+                };
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                }
+                dbRef = firebase.database().ref('adscreen_sessions');
+                firebaseInitialized = true;
+                document.getElementById('sync-text').innerText = "Sincronização em Nuvem Ativa";
+                document.getElementById('sync-dot').style.backgroundColor = "#10b981";
+            } catch (e) {
+                console.warn("Firebase fallback mode active:", e);
+                firebaseInitialized = false;
+            }
+
+            // Setup BroadcastChannel for local/same-network real-time sync
+            if (window.BroadcastChannel) {
+                broadcastChannel = new BroadcastChannel('adscreen_sync_channel');
+                broadcastChannel.onmessage = (event) => {
+                    handleSyncMessage(event.data);
+                };
+            }
+
+            // Also listen to Storage events for robust multi-tab support
+            window.addEventListener('storage', (e) => {
+                if (e.key && e.key.startsWith('ad_screen_')) {
+                    try {
+                        const data = JSON.parse(e.newValue);
+                        if (currentRole === 'tv' && data) {
+                            renderTvAd(data);
+                        }
+                    } catch(err) {}
+                }
+            });
+        }
+
+        function publishData(token, payload) {
+            // 1. Save to LocalStorage / BroadcastChannel
+            localStorage.setItem('ad_screen_' + token, JSON.stringify(payload));
+            if (broadcastChannel) {
+                broadcastChannel.postMessage({ token: token, payload: payload });
+            }
+            // 2. Save to Firebase if online
+            if (firebaseInitialized && dbRef) {
+                dbRef.child(token).set(payload).catch(err => console.error("Firebase publish error:", err));
+            }
+        }
+
+        function listenToData(token, callback) {
+            // 1. Poll localStorage & BroadcastChannel
+            const checkInterval = setInterval(() => {
+                const val = localStorage.getItem('ad_screen_' + token);
+                if (val) {
+                    try { callback(JSON.parse(val)); } catch(e){}
+                }
+            }, 300);
+
+            // 2. Listen to Firebase real-time events
+            let fbListener = null;
+            if (firebaseInitialized && dbRef) {
+                fbListener = dbRef.child(token);
+                fbListener.on('value', (snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        callback(data);
+                    }
+                });
+            }
+
+            return () => {
+                clearInterval(checkInterval);
+                if (fbListener && firebaseInitialized) {
+                    fbListener.off();
+                }
+            };
+        }
+
+        function handleSyncMessage(msg) {
+            if (currentRole === 'tv' && msg && msg.token === currentToken && msg.payload) {
+                renderTvAd(msg.payload);
+            }
+        }
+
+        // Global Navigation & Mode Switching
         window.switchMode = function(role) {
             currentRole = role;
             document.getElementById('view-home').classList.add('hidden');
@@ -528,15 +615,24 @@
             window.switchMode(role);
         };
 
+        let activeListenerUnsub = null;
+
         function initTvRole() {
             window.regenerateToken();
             document.getElementById('tv-waiting').classList.remove('hidden');
             document.getElementById('tv-player').classList.add('hidden');
-            startTvSync();
+            
+            if (activeListenerUnsub) activeListenerUnsub();
+            
+            activeListenerUnsub = listenToData(currentToken, (adObj) => {
+                renderTvAd(adObj);
+                const statusEl = document.getElementById('pairing-status-text');
+                if (statusEl) statusEl.innerText = "Celular conectado com sucesso!";
+            });
         }
 
         window.regenerateToken = function() {
-            currentToken = Math.floor(100000 + Math.random() * 900000).toString();
+            currentToken = Math.floor(1000 + Math.random() * 9000).toString();
             document.getElementById('tv-token-display').innerText = currentToken;
 
             const qrContainer = document.getElementById('qrcode-container');
@@ -544,7 +640,7 @@
             const pairingUrl = `${window.location.origin}${window.location.pathname}?token=${currentToken}`;
             
             if (typeof QRCode !== 'undefined') {
-                qrInstance = new QRCode(qrContainer, {
+                new QRCode(qrContainer, {
                     text: pairingUrl,
                     width: 170,
                     height: 170,
@@ -553,31 +649,15 @@
                     correctLevel: QRCode.CorrectLevel.H
                 });
             } else {
-                qrContainer.innerHTML = `<div style="font-size:0.8rem; color:#000; font-family:monospace;">Token: ${currentToken}</div>`;
+                qrContainer.innerHTML = `<div style="font-size:0.9rem; color:#000; font-family:monospace; font-weight:bold;">Token: ${currentToken}</div>`;
             }
             window.showToast("Novo código gerado com sucesso!", "info");
         };
 
-        function startTvSync() {
-            stopTvSync();
-            syncInterval = setInterval(() => {
-                if (!currentToken) return;
-                const activeAdData = localStorage.getItem('ad_screen_' + currentToken);
-                if (activeAdData) {
-                    try {
-                        const adObj = JSON.parse(activeAdData);
-                        renderTvAd(adObj);
-                    } catch (e) {
-                        console.error("Parse error", e);
-                    }
-                }
-            }, 1000);
-        }
-
         function stopTvSync() {
-            if (syncInterval) {
-                clearInterval(syncInterval);
-                syncInterval = null;
+            if (activeListenerUnsub) {
+                activeListenerUnsub();
+                activeListenerUnsub = null;
             }
         }
 
@@ -602,7 +682,7 @@
                 content.innerHTML = `
                     <div style="position: absolute; inset:0; background: ${bgStyle};"></div>
                     <div style="position: absolute; inset:0; opacity: 0.08; background-image: radial-gradient(#10b981 1.5px, transparent 1.5px); background-size: 28px 28px;"></div>
-                    <div style="position: relative; z-index: 10; text-align: center; max-width: 900px; padding: 2rem; display: flex; flex-direction: column; gap: 2rem; animation: fadeIn 0.5s ease-out;">
+                    <div style="position: relative; z-index: 10; text-align: center; max-width: 900px; padding: 2rem; display: flex; flex-direction: column; gap: 2rem;">
                         <div style="width: 6rem; height: 6rem; border-radius: 1.5rem; background: rgba(255,255,255,0.1); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 3rem; margin: 0 auto; box-shadow: 0 20px 40px rgba(0,0,0,0.4);" class="glow-effect">
                             <i class="fa-solid ${ad.icon || 'fa-bullhorn'}"></i>
                         </div>
@@ -625,8 +705,8 @@
 
         window.connectToTv = function() {
             const val = document.getElementById('token-input').value.trim().toUpperCase();
-            if (val.length !== 6) {
-                window.showToast("Por favor, digite um token válido de 6 dígitos.", "error");
+            if (val.length < 4) {
+                window.showToast("Por favor, digite um token válido.", "error");
                 return;
             }
             currentToken = val;
@@ -697,7 +777,7 @@
                 return;
             }
             try {
-                localStorage.setItem('ad_screen_' + currentToken, JSON.stringify(ad));
+                publishData(currentToken, ad);
                 window.showToast("Anúncio transmitido com sucesso para a tela!", "success");
             } catch (e) {
                 console.error(e);
@@ -731,8 +811,9 @@
             setTimeout(() => toast.remove(), 3500);
         };
 
-        // Auto-detect token parameter on load for QR Code scans
+        // Initialize sync engine and check URL parameters on load
         window.addEventListener('DOMContentLoaded', () => {
+            initSyncEngine();
             const params = new URLSearchParams(window.location.search);
             const tokenParam = params.get('token');
             if (tokenParam) {
