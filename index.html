@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AdScreen Sync - Radar & AirCast</title>
+    <title>AdScreen Sync - Radar Real & AirCast</title>
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- QR Code Library -->
@@ -216,14 +216,14 @@
                 </div>
                 <div>
                     <span class="brand-title">AdScreen Sync</span>
-                    <span class="brand-subtitle">Radar AirCast</span>
+                    <span class="brand-subtitle">Radar Real AirCast</span>
                 </div>
             </div>
             
             <div style="display: flex; align-items: center; gap: 0.75rem;">
                 <div id="connection-status-badge" style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.7rem; background: rgba(255,255,255,0.03); padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid var(--border);">
                     <span style="width: 7px; height: 7px; border-radius: 50%; background-color: #10b981;" id="sync-dot"></span>
-                    <span id="sync-text" style="color: var(--text-muted);">Rede Ativa</span>
+                    <span id="sync-text" style="color: var(--text-muted);">Radar Conectado</span>
                 </div>
                 <button onclick="window.openHelpModal()" class="btn btn-secondary" style="padding: 0.45rem 0.75rem; font-size: 0.8rem;">
                     <i class="fa-solid fa-circle-question"></i>
@@ -238,10 +238,10 @@
         <div id="view-home" style="display: flex; flex-direction: column; gap: 2rem; max-width: 900px; margin: 0 auto; width: 100%;">
             <div style="text-align: center; max-width: 650px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem;">
                 <h1 style="font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em;">
-                    Radar & Espelhamento de <span style="background: linear-gradient(90deg, #34d399, #6ee7b7, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Anúncios</span>
+                    Radar Real de Telas & <span style="background: linear-gradient(90deg, #34d399, #6ee7b7, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Espelhamento Puro</span>
                 </h1>
                 <p style="color: var(--text-muted); font-size: clamp(0.9rem, 2vw, 1.05rem); line-height: 1.6;">
-                    Seu celular detecta automaticamente as telas ao redor. Toque em um dispositivo para abrir o espelhamento direto e transmitir apenas a campanha escolhida.
+                    Abra o modo receptor em qualquer Smart TV ou monitor. O radar do celular detectará o aparelho real online para você tocar e transmitir apenas o anúncio em tela cheia.
                 </p>
             </div>
 
@@ -249,20 +249,20 @@
                 <!-- TV Card -->
                 <div onclick="window.selectRole('tv')" class="card" style="cursor: pointer; position: relative;">
                     <div style="position: absolute; top: -10px; right: 20px; background: var(--accent); color: #000; font-weight: 800; font-size: 0.65rem; padding: 0.2rem 0.6rem; border-radius: 999px; text-transform: uppercase;">
-                        Modo Receptor (Tela)
+                        Modo Receptor (TV)
                     </div>
                     <div style="display: flex; flex-direction: column; height: 100%; justify-content: space-between; gap: 2rem;">
                         <div>
                             <div style="width: 3.25rem; height: 3.25rem; border-radius: 0.75rem; background: rgba(16,185,129,0.1); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1.25rem; border: 1px solid rgba(16,185,129,0.2);">
                                 <i class="fa-solid fa-tv"></i>
                             </div>
-                            <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem;">Tornar esta Tela um Receptor</h2>
+                            <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem;">Tornar este Aparelho um Receptor</h2>
                             <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">
-                                Ativa o radar para ser encontrada por celulares próximos e aguarda o recebimento do anúncio em tela cheia.
+                                Registra este navegador/tela no Firebase em tempo real para aparecer no radar dos celulares.
                             </p>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--accent); font-weight: 600; font-size: 0.85rem;">
-                            <span>Iniciar Recepção</span>
+                            <span>Iniciar Receptor</span>
                             <i class="fa-solid fa-arrow-right"></i>
                         </div>
                     </div>
@@ -271,16 +271,16 @@
                 <!-- Controller Card -->
                 <div onclick="window.selectRole('controller')" class="card" style="cursor: pointer; position: relative;">
                     <div style="position: absolute; top: -10px; right: 20px; background: #3b82f6; color: #fff; font-weight: 800; font-size: 0.65rem; padding: 0.2rem 0.6rem; border-radius: 999px; text-transform: uppercase;">
-                        Modo Celular (Transmissor)
+                        Modo Celular (Radar)
                     </div>
                     <div style="display: flex; flex-direction: column; height: 100%; justify-content: space-between; gap: 2rem;">
                         <div>
                             <div style="width: 3.25rem; height: 3.25rem; border-radius: 0.75rem; background: rgba(59,130,246,0.1); color: #3b82f6; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1.25rem; border: 1px solid rgba(59,130,246,0.2);">
                                 <i class="fa-solid fa-radar"></i>
                             </div>
-                            <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem;">Abrir Radar de Aparelhos</h2>
+                            <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem;">Abrir Radar de Aparelhos Reais</h2>
                             <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">
-                                Lista em tempo real os monitores e TVs disponíveis para você tocar e espelhar o anúncio selecionado.
+                                Lista em tempo real todas as TVs e telas conectadas na nuvem para você tocar e espelhar o anúncio.
                             </p>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem; color: #3b82f6; font-weight: 600; font-size: 0.85rem;">
@@ -294,29 +294,30 @@
 
         <!-- TV VIEW -->
         <div id="view-tv" class="hidden" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; width: 100%; min-height: 75vh;">
-            <div id="tv-waiting" class="card glow-effect" style="text-align: center; max-width: 400px; width: 100%; display: flex; flex-direction: column; gap: 1.25rem; padding: 2rem 1.5rem;">
+            <div id="tv-waiting" class="card glow-effect" style="text-align: center; max-width: 420px; width: 100%; display: flex; flex-direction: column; gap: 1.25rem; padding: 2rem 1.5rem;">
                 <div style="width: 2.75rem; height: 2.75rem; border-radius: 0.85rem; background: rgba(16,185,129,0.1); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.15rem; margin: 0 auto; border: 1px solid rgba(16,185,129,0.2);">
                     <i class="fa-solid fa-satellite-dish fa-spin"></i>
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 0.35rem;">
-                    <h2 style="font-size: 1.35rem; font-weight: 700;">Radar de Tela Ativo</h2>
-                    <p style="color: var(--text-muted); font-size: 0.8rem;">Esta tela está visível na rede. Selecione-a no seu celular para espelhar o anúncio.</p>
+                    <h2 style="font-size: 1.35rem; font-weight: 700;">Receptor Ativo no Radar</h2>
+                    <p style="color: var(--text-muted); font-size: 0.8rem;">Defina o nome deste aparelho para identificá-lo facilmente no celular:</p>
                 </div>
                 
-                <div id="qrcode-container" style="background: #ffffff; padding: 0.85rem; border-radius: 0.85rem; display: inline-block; margin: 0 auto; box-shadow: 0 10px 25px rgba(0,0,0,0.5);"></div>
+                <div>
+                    <input type="text" id="tv-custom-name" value="Smart TV Sala" class="input" style="text-align: center; font-weight: 600;" oninput="window.updateDeviceName(this.value)">
+                </div>
+
+                <div id="qrcode-container" style="background: #ffffff; padding: 0.75rem; border-radius: 0.85rem; display: inline-block; margin: 0 auto; box-shadow: 0 10px 25px rgba(0,0,0,0.5);"></div>
 
                 <div style="display: flex; flex-direction: column; gap: 0.2rem;">
-                    <span style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.08em;">Identificador na Rede</span>
-                    <div id="tv-token-display" style="font-size: 2rem; font-family: monospace; font-weight: 800; letter-spacing: 0.15em; color: var(--accent); text-shadow: 0 0 15px rgba(16,185,129,0.4);">------</div>
-                    <div id="pairing-status-text" style="font-size: 0.75rem; color: #38bdf8; margin-top: 0.2rem;">Aguardando seleção por celular...</div>
+                    <span style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.08em;">ID do Aparelho</span>
+                    <div id="tv-token-display" style="font-size: 1.75rem; font-family: monospace; font-weight: 800; letter-spacing: 0.15em; color: var(--accent); text-shadow: 0 0 15px rgba(16,185,129,0.4);">------</div>
+                    <div id="pairing-status-text" style="font-size: 0.75rem; color: #38bdf8; margin-top: 0.2rem;">Aguardando sinal do celular...</div>
                 </div>
 
                 <div style="display: flex; justify-content: center; gap: 0.75rem; margin-top: 0.25rem;">
                     <button onclick="window.switchMode('home')" class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.5rem 1rem;">
                         <i class="fa-solid fa-arrow-left"></i> Voltar
-                    </button>
-                    <button onclick="window.regenerateToken()" class="btn btn-primary" style="font-size: 0.75rem; padding: 0.5rem 1rem;">
-                        <i class="fa-solid fa-rotate"></i> Novo ID
                     </button>
                 </div>
             </div>
@@ -335,7 +336,7 @@
             </div>
         </div>
 
-        <!-- CONTROLLER VIEW (RADAR DE APARELHOS) -->
+        <!-- CONTROLLER VIEW (RADAR REAL) -->
         <div id="view-controller" class="hidden" style="max-width: 650px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; gap: 1.25rem;">
             <!-- Radar Card -->
             <div id="controller-radar-card" class="card" style="display: flex; flex-direction: column; gap: 1.25rem;">
@@ -345,8 +346,8 @@
                             <i class="fa-solid fa-radar fa-pulse"></i>
                         </div>
                         <div>
-                            <h2 style="font-size: 1rem; font-weight: 700;">Radar de Aparelhos Próximos</h2>
-                            <p style="font-size: 0.7rem; color: var(--text-muted);">Toque em uma tela para abrir o espelhamento imediato</p>
+                            <h2 style="font-size: 1rem; font-weight: 700;">Radar de Aparelhos Reais</h2>
+                            <p style="font-size: 0.7rem; color: var(--text-muted);">Telas ativas na nuvem em tempo real</p>
                         </div>
                     </div>
                     <button onclick="window.switchMode('home')" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.15rem;"><i class="fa-solid fa-xmark"></i></button>
@@ -354,22 +355,15 @@
 
                 <div style="display: flex; flex-direction: column; gap: 0.75rem;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span class="label" style="margin-bottom: 0;">Dispositivos Encontrados na Rede</span>
-                        <button onclick="window.scanDevices()" class="btn btn-secondary" style="font-size: 0.7rem; padding: 0.3rem 0.6rem;"><i class="fa-solid fa-rotate"></i> Atualizar Radar</button>
+                        <span class="label" style="margin-bottom: 0;">Dispositivos Online Prontos</span>
+                        <button onclick="window.loadRealDevices()" class="btn btn-secondary" style="font-size: 0.7rem; padding: 0.3rem 0.6rem;"><i class="fa-solid fa-rotate"></i> Atualizar</button>
                     </div>
 
-                    <!-- Lista de Aparelhos Detectados -->
+                    <!-- Lista Real de Aparelhos -->
                     <div id="devices-list" style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 250px; overflow-y: auto;">
-                        <!-- Preenchido via JS -->
                         <div style="text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.85rem;">
-                            Procurando telas e TVs ativas...
+                            <i class="fa-solid fa-spinner fa-spin"></i> Buscando aparelhos reais online...
                         </div>
-                    </div>
-
-                    <!-- Opção de inserção manual caso necessário -->
-                    <div style="border-top: 1px solid var(--border); padding-top: 0.75rem; display: flex; gap: 0.5rem; align-items: center;">
-                        <input type="text" id="token-input" maxlength="6" placeholder="Ou digite o ID manual..." class="input" style="font-family: monospace; font-size: 0.9rem; text-transform: uppercase;">
-                        <button onclick="window.connectToManualToken()" class="btn btn-secondary" style="white-space: nowrap; font-size: 0.8rem;">Conectar</button>
                     </div>
                 </div>
             </div>
@@ -380,8 +374,8 @@
                     <div style="display: flex; align-items: center; gap: 0.75rem;">
                         <span style="width: 9px; height: 9px; border-radius: 50%; background-color: var(--accent); box-shadow: 0 0 10px var(--accent);"></span>
                         <div>
-                            <span class="label" style="margin-bottom: 0;">Espelhando para</span>
-                            <span style="font-weight: 600; font-size: 0.9rem;"><span id="active-device-name" style="color: var(--accent);">Smart TV</span> (<span id="active-token-label" style="font-family: monospace;"></span>)</span>
+                            <span class="label" style="margin-bottom: 0;">Espelhando para o Aparelho Real</span>
+                            <span style="font-weight: 600; font-size: 0.9rem;"><span id="active-device-name" style="color: var(--accent);">TV</span> (<span id="active-token-label" style="font-family: monospace;"></span>)</span>
                         </div>
                     </div>
                     <button onclick="window.disconnectController()" class="btn btn-danger" style="font-size: 0.7rem; padding: 0.4rem 0.8rem;">Desconectar</button>
@@ -396,7 +390,7 @@
 
                     <!-- PRESETS TAB -->
                     <div id="tab-presets" style="display: flex; flex-direction: column; gap: 0.85rem;">
-                        <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em;">Toque para espelhar apenas o anúncio na TV:</span>
+                        <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em;">Toque para espelhar apenas o anúncio na TV real:</span>
                         <div class="grid-2">
                             <div onclick="window.sendPresetAd('promo')" class="card" style="cursor: pointer; padding: 0.85rem; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
                                 <div style="height: 85px; border-radius: 0.5rem; background: linear-gradient(135deg, #4c1d95, #312e81); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.25rem; margin-bottom: 0.65rem;">
@@ -467,7 +461,7 @@
                                 </div>
                             </div>
                             <button onclick="window.sendCustomAd()" class="btn btn-primary" style="margin-top: 0.25rem; padding: 0.75rem;">
-                                <i class="fa-solid fa-paper-plane"></i> Espelhar Anúncio na Tela
+                                <i class="fa-solid fa-paper-plane"></i> Espelhar Anúncio na Tela Real
                             </button>
                         </div>
                     </div>
@@ -482,14 +476,14 @@
         <div class="card" style="max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 1rem;">
             <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem;">
                 <h3 style="font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; color: var(--accent);">
-                    <i class="fa-solid fa-circle-question"></i> Como Funciona o Radar AirCast
+                    <i class="fa-solid fa-circle-question"></i> Como Funciona o Radar Real
                 </h3>
                 <button onclick="window.closeHelpModal()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.15rem;"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div style="font-size: 0.825rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.65rem; line-height: 1.5;">
-                <p><strong style="color: #fff;">1. Na TV / Monitor:</strong> Abra o modo receptor. Ele se registrará automaticamente no radar da rede.</p>
-                <p><strong style="color: #fff;">2. No Celular:</strong> Abra o modo controlador. O radar listará instantaneamente as telas ativas.</p>
-                <p><strong style="color: #fff;">3. Espelhamento Puro:</strong> Toque no aparelho desejado. Escolha o anúncio e ele será projetado em tela cheia de forma isolada.</p>
+                <p><strong style="color: #fff;">1. Na TV / Outro Navegador:</strong> Abra o modo Receptor. Ele se cadastra imediatamente na nuvem como um dispositivo real online.</p>
+                <p><strong style="color: #fff;">2. No Celular:</strong> Abra o modo Radar. O celular lista de verdade qualquer aparelho que esteja com a tela de recepção aberta.</p>
+                <p><strong style="color: #fff;">3. Espelhamento Direto:</strong> Toque no aparelho listado e envie o anúncio. A tela abrirá o player de forma exclusiva.</p>
             </div>
             <div style="text-align: right; margin-top: 0.25rem;">
                 <button onclick="window.closeHelpModal()" class="btn btn-primary" style="font-size: 0.75rem; padding: 0.5rem 1rem;">Entendi</button>
@@ -501,13 +495,13 @@
     <div id="toast-container" class="toast-box"></div>
 
     <script>
-        // --- RADAR AIRCAST & SYNC ENGINE ---
+        // --- REAL RADAR & FIREBASE SYNC ENGINE ---
         let dbRef = null;
         let radarRef = null;
         let broadcastChannel = null;
         let currentRole = 'home';
         let currentToken = '';
-        let deviceName = '';
+        let currentDeviceName = 'Smart TV';
         let firebaseInitialized = false;
 
         const presetAds = {
@@ -558,15 +552,15 @@
                 }
                 
                 dbRef = firebase.database().ref('adscreen_sessions');
-                radarRef = firebase.database().ref('adscreen_radar');
+                radarRef = firebase.database().ref('adscreen_real_radar');
                 firebaseInitialized = true;
                 document.getElementById('sync-text').innerText = "Radar Global Ativo";
                 document.getElementById('sync-dot').style.backgroundColor = "#10b981";
             } catch (e) {
-                console.warn("Modo local ativado:", e);
+                console.warn("Erro ao iniciar Firebase:", e);
                 firebaseInitialized = false;
-                document.getElementById('sync-text').innerText = "Modo Local Ativo";
-                document.getElementById('sync-dot').style.backgroundColor = "#f59e0b";
+                document.getElementById('sync-text').innerText = "Erro de Conexão";
+                document.getElementById('sync-dot').style.backgroundColor = "#ef4444";
             }
 
             if (window.BroadcastChannel) {
@@ -575,21 +569,9 @@
                     handleSyncMessage(event.data);
                 };
             }
-
-            window.addEventListener('storage', (e) => {
-                if (e.key && e.key.startsWith('ad_screen_')) {
-                    try {
-                        const data = JSON.parse(e.newValue);
-                        if (currentRole === 'tv' && data) {
-                            renderTvAd(data);
-                        }
-                    } catch(err) {}
-                }
-            });
         }
 
         function publishData(token, payload) {
-            localStorage.setItem('ad_screen_' + token, JSON.stringify(payload));
             if (broadcastChannel) {
                 broadcastChannel.postMessage({ token: token, payload: payload });
             }
@@ -599,13 +581,6 @@
         }
 
         function listenToData(token, callback) {
-            const checkInterval = setInterval(() => {
-                const val = localStorage.getItem('ad_screen_' + token);
-                if (val) {
-                    try { callback(JSON.parse(val)); } catch(e){}
-                }
-            }, 250);
-
             let fbListener = null;
             if (firebaseInitialized && dbRef) {
                 fbListener = dbRef.child(token);
@@ -616,9 +591,7 @@
                     }
                 });
             }
-
             return () => {
-                clearInterval(checkInterval);
                 if (fbListener && firebaseInitialized) {
                     fbListener.off();
                 }
@@ -648,7 +621,7 @@
                 document.getElementById('view-controller').classList.remove('hidden');
                 document.getElementById('controller-radar-card').classList.remove('hidden');
                 document.getElementById('controller-dashboard').classList.add('hidden');
-                scanDevices();
+                loadRealDevices();
             }
         };
 
@@ -657,24 +630,22 @@
         };
 
         let activeListenerUnsub = null;
+        let presenceInterval = null;
 
         function initTvRole() {
             currentToken = Math.floor(1000 + Math.random() * 9000).toString();
-            deviceName = "Smart TV - " + currentToken;
+            currentDeviceName = document.getElementById('tv-custom-name').value || "Smart TV";
             document.getElementById('tv-token-display').innerText = currentToken;
 
-            // Registra a TV no Radar de Aparelhos
-            const radarData = { name: deviceName, token: currentToken, lastSeen: Date.now() };
-            localStorage.setItem('radar_device_' + currentToken, JSON.stringify(radarData));
-            if (firebaseInitialized && radarRef) {
-                radarRef.child(currentToken).set(radarData);
-            }
+            // Registra presença real no Firebase e mantém o status ativo
+            registerPresence();
+            presenceInterval = setInterval(registerPresence, 10000);
 
             const qrContainer = document.getElementById('qrcode-container');
             qrContainer.innerHTML = '';
             const pairingUrl = `${window.location.origin}${window.location.pathname}?token=${currentToken}`;
             if (typeof QRCode !== 'undefined') {
-                new QRCode(qrContainer, { text: pairingUrl, width: 140, height: 140, colorDark: "#000000", colorLight: "#ffffff" });
+                new QRCode(qrContainer, { text: pairingUrl, width: 130, height: 130, colorDark: "#000000", colorLight: "#ffffff" });
             }
 
             document.getElementById('tv-waiting').classList.remove('hidden');
@@ -687,15 +658,34 @@
             });
         }
 
-        window.regenerateToken = function() {
-            initTvRole();
-            window.showToast("Novo ID de rede gerado!", "info");
+        function registerPresence() {
+            if (firebaseInitialized && radarRef && currentToken) {
+                const deviceData = {
+                    name: currentDeviceName,
+                    token: currentToken,
+                    lastSeen: firebase.database.ServerValue.TIMESTAMP
+                };
+                radarRef.child(currentToken).set(deviceData);
+                // Remove automaticamente se o receptor fechar a aba
+                radarRef.child(currentToken).onDisconnect().remove();
+            }
+        }
+
+        window.updateDeviceName = function(newName) {
+            currentDeviceName = newName || "Smart TV";
+            if (currentToken && firebaseInitialized && radarRef) {
+                radarRef.child(currentToken).update({ name: currentDeviceName });
+            }
         };
 
         function stopTvSync() {
             if (activeListenerUnsub) {
                 activeListenerUnsub();
                 activeListenerUnsub = null;
+            }
+            if (presenceInterval) {
+                clearInterval(presenceInterval);
+                presenceInterval = null;
             }
             if (currentToken && firebaseInitialized && radarRef) {
                 radarRef.child(currentToken).remove();
@@ -705,50 +695,43 @@
             }
         }
 
-        // --- SCANNER DE APARELHOS PARA O CELULAR ---
-        window.scanDevices = function() {
+        // --- BUSCA REAL DE APARELHOS NO FIREBASE ---
+        window.loadRealDevices = function() {
             const listContainer = document.getElementById('devices-list');
-            listContainer.innerHTML = `<div style="text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.85rem;"><i class="fa-solid fa-spinner fa-spin"></i> Escaneando telas e TVs na rede...</div>`;
+            listContainer.innerHTML = `<div style="text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.85rem;"><i class="fa-solid fa-spinner fa-spin"></i> Buscando aparelhos reais online...</div>`;
 
-            setTimeout(() => {
-                let devices = [];
+            if (!firebaseInitialized || !radarRef) {
+                listContainer.innerHTML = `<div style="text-align: center; padding: 1rem; color: #f87171; font-size: 0.85rem;">Erro de conexão com o banco de dados.</div>`;
+                return;
+            }
 
-                // 1. Varre localStorage por TVs locais
-                for (let i = 0; i < localStorage.length; i++) {
-                    const key = localStorage.key(i);
-                    if (key.startsWith('radar_device_')) {
-                        try {
-                            devices.push(JSON.parse(localStorage.getItem(key)));
-                        } catch(e){}
-                    }
-                }
-
-                // Se houver conexão com o Firebase, busca também na nuvem
-                if (firebaseInitialized && radarRef) {
-                    radarRef.once('value').then(snapshot => {
-                        const val = snapshot.val();
-                        if (val) {
-                            Object.values(val).forEach(d => {
-                                if (!devices.some(existing => existing.token === d.token)) {
-                                    devices.push(d);
-                                }
-                            });
-                        }
-                        renderDeviceList(devices);
+            radarRef.once('value').then(snapshot => {
+                const devices = [];
+                const val = snapshot.val();
+                if (val) {
+                    Object.values(val).forEach(d => {
+                        devices.push(d);
                     });
-                } else {
-                    renderDeviceList(devices);
                 }
-            }, 600);
+                renderRealDeviceList(devices);
+            }).catch(err => {
+                listContainer.innerHTML = `<div style="text-align: center; padding: 1rem; color: #f87171; font-size: 0.85rem;">Falha ao carregar dispositivos.</div>`;
+            });
         };
 
-        function renderDeviceList(devices) {
+        function renderRealDeviceList(devices) {
             const listContainer = document.getElementById('devices-list');
             listContainer.innerHTML = '';
 
             if (devices.length === 0) {
-                // Adiciona um dispositivo simulado padrão caso nenhum esteja aberto para facilitar o teste imediato
-                devices.push({ name: "Smart TV Sala (Demo)", token: "9999" });
+                listContainer.innerHTML = `
+                    <div style="text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.85rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.5rem; color: #f59e0b;"></i>
+                        <span>Nenhum aparelho receptor encontrado online.</span>
+                        <span style="font-size: 0.75rem;">Abra o "Modo Receptor" em outro navegador ou Smart TV para ele aparecer aqui.</span>
+                    </div>
+                `;
+                return;
             }
 
             devices.forEach(dev => {
@@ -763,8 +746,8 @@
                             <i class="fa-solid fa-tv"></i>
                         </div>
                         <div>
-                            <div style="font-weight: 600; font-size: 0.9rem;">${dev.name || 'Tela Conectada'}</div>
-                            <div style="font-size: 0.7rem; color: var(--text-muted); font-family: monospace;">ID: #${dev.token}</div>
+                            <div style="font-weight: 600; font-size: 0.9rem;">${dev.name || 'Smart TV'}</div>
+                            <div style="font-size: 0.7rem; color: var(--text-muted); font-family: monospace;">ID Online: #${dev.token}</div>
                         </div>
                     </div>
                     <button class="btn btn-primary" style="font-size: 0.75rem; padding: 0.35rem 0.75rem;">Espelhar <i class="fa-solid fa-arrow-right"></i></button>
@@ -777,29 +760,19 @@
 
         window.connectToDevice = function(token, name) {
             currentToken = token;
-            deviceName = name || 'Tela Receptora';
+            currentDeviceName = name || 'Tela Receptora';
             document.getElementById('controller-radar-card').classList.add('hidden');
             document.getElementById('controller-dashboard').classList.remove('hidden');
             document.getElementById('active-token-label').innerText = `#${currentToken}`;
-            document.getElementById('active-device-name').innerText = deviceName;
-            window.showToast("Espelhamento conectado com sucesso!", "success");
-        };
-
-        window.connectToManualToken = function() {
-            const val = document.getElementById('token-input').value.trim().toUpperCase();
-            if (val.length < 4) {
-                window.showToast("Digite um ID válido.", "error");
-                return;
-            }
-            window.connectToDevice(val, "Monitor Remoto");
+            document.getElementById('active-device-name').innerText = currentDeviceName;
+            window.showToast("Conectado ao aparelho real!", "success");
         };
 
         window.disconnectController = function() {
             document.getElementById('controller-radar-card').classList.remove('hidden');
             document.getElementById('controller-dashboard').classList.add('hidden');
-            document.getElementById('token-input').value = '';
             currentToken = '';
-            scanDevices();
+            loadRealDevices();
             window.showToast("Espelhamento encerrado.", "info");
         };
 
@@ -809,7 +782,6 @@
             const player = document.getElementById('tv-player');
             player.classList.remove('hidden');
             
-            // Oculta completamente o cabeçalho para focar apenas no anúncio espelhado
             document.getElementById('main-header').style.display = 'none';
 
             const content = document.getElementById('player-content');
@@ -850,7 +822,7 @@
 
         window.disconnectTvSession = function() {
             stopTvSync();
-            if (currentToken) localStorage.removeItem('ad_screen_' + currentToken);
+            if (currentToken) publishData(currentToken, null);
             document.getElementById('main-header').style.display = 'block';
             window.switchMode('home');
             window.showToast("Espelhamento encerrado na tela.", "info");
@@ -902,12 +874,12 @@
 
         function transmitAd(ad) {
             if (!currentToken) {
-                window.showToast("Selecione um aparelho no radar primeiro.", "error");
+                window.showToast("Selecione um aparelho real no radar primeiro.", "error");
                 return;
             }
             try {
                 publishData(currentToken, ad);
-                window.showToast("Anúncio espelhado com sucesso na tela!", "success");
+                window.showToast("Anúncio espelhado com sucesso na TV real!", "success");
             } catch (e) {
                 window.showToast("Erro ao espelhar anúncio.", "error");
             }
@@ -935,12 +907,6 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             initSyncEngine();
-            const params = new URLSearchParams(window.location.search);
-            const tokenParam = params.get('token');
-            if (tokenParam) {
-                window.switchMode('controller');
-                window.connectToDevice(tokenParam, "Tela Externa");
-            }
         });
     </script>
 </body>
