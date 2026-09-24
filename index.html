@@ -1,28 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AdScreen Sync - Plataforma de Distribuição de Anúncios</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#f0fdf4',
-                            500: '#10b981',
-                            600: '#059669',
-                            700: '#047857',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- QR Code Library -->
@@ -30,269 +11,419 @@
     <!-- Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .glass { background: rgba(17, 24, 39, 0.75); backdrop-filter: blur(12px); }
+        :root {
+            --bg-primary: #020617;
+            --bg-secondary: #0f172a;
+            --bg-card: #1e293b;
+            --accent: #10b981;
+            --accent-hover: #059669;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            selection-background-color: var(--accent);
+            selection-color: #fff;
+        }
+        header {
+            border-bottom: 1px solid var(--border);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            width: 100%;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            height: 4rem;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+        }
+        .brand-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.75rem;
+            background: linear-gradient(135deg, #059669, #34d399);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+        }
+        .brand-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ffffff, #94a3b8, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .brand-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1.25rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+        .btn-primary {
+            background-color: var(--accent);
+            color: #020617;
+        }
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover {
+            background-color: #334155;
+        }
+        .btn-danger {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        .btn-danger:hover {
+            background-color: rgba(239, 68, 68, 0.2);
+        }
+        .card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .input {
+            width: 100%;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .input:focus { border-color: var(--accent); }
+        .label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
         @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
-            50% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.8); }
+            0%, 100% { box-shadow: 0 0 15px rgba(16, 185, 129, 0.3); }
+            50% { box-shadow: 0 0 35px rgba(16, 185, 129, 0.7); }
         }
         .glow-effect { animation: pulseGlow 3s infinite; }
+        .toast-box {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            pointer-events: none;
+        }
+        .toast {
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            pointer-events: auto;
+            animation: fadeInOut 3.5s forwards;
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(1rem); }
+            10% { opacity: 1; transform: translateY(0); }
+            85% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-1rem); }
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
+<body>
 
-    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchMode('home')">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-emerald-400 flex items-center justify-center text-white shadow-lg shadow-brand-500/30">
-                    <i class="fa-solid fa-tower-broadcast text-lg"></i>
+    <header>
+        <div class="container header-content" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="brand" onclick="window.switchMode('home')">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-tower-broadcast"></i>
                 </div>
                 <div>
-                    <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-slate-200 to-brand-400 bg-clip-text text-transparent">AdScreen Sync</span>
-                    <span class="block text-xs text-slate-400">Digital Signage & Cast</span>
+                    <span class="brand-title">AdScreen Sync</span>
+                    <span class="brand-subtitle">Digital Signage & Cast</span>
                 </div>
             </div>
             
-            <div class="flex items-center space-x-3">
-                <div id="auth-status" class="hidden sm:flex items-center space-x-2 text-xs bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700">
-                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse" id="auth-dot"></span>
-                    <span id="auth-text" class="text-slate-300">Conectando...</span>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div id="auth-status" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; background: rgba(30,41,59,0.8); padding: 0.35rem 0.85rem; border-radius: 999px; border: 1px solid var(--border);">
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #10b981;" id="auth-dot"></span>
+                    <span id="auth-text" style="color: var(--text-muted);">Sincronização Ativa</span>
                 </div>
-                <button onclick="openHelpModal()" class="px-3 py-2 text-sm bg-slate-800 hover:bg-slate-700 rounded-lg transition text-slate-300 hover:text-white flex items-center space-x-2">
+                <button onclick="window.openHelpModal()" class="btn btn-secondary" style="padding: 0.5rem 0.85rem;">
                     <i class="fa-solid fa-circle-question"></i>
-                    <span class="hidden md:inline">Como usar</span>
+                    <span style="display: none; @media(min-width: 640px){ display: inline; }">Como usar</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
+    <main class="container" style="flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 2rem 1rem;">
 
-        <!-- VIEW: HOME / SELECTION -->
-        <div id="view-home" class="space-y-8 animate-fade-in">
-            <div class="text-center max-w-2xl mx-auto space-y-4">
-                <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-                    Distribuição Instantânea de <span class="bg-gradient-to-r from-brand-400 to-emerald-200 bg-clip-text text-transparent">Anúncios em Telas</span>
+        <div id="view-home" style="display: flex; flex-direction: column; gap: 2rem; max-width: 900px; margin: 0 auto; width: 100%;">
+            <div style="text-align: center; max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem;">
+                <h1 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; line-height: 1.2;">
+                    Distribuição Instantânea de <span style="background: linear-gradient(90deg, #34d399, #6ee7b7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Anúncios em Telas</span>
                 </h1>
-                <p class="text-slate-400 text-base sm:text-lg">
-                    Transforme qualquer navegador ou Smart TV em um painel digital. Conecte seu celular via QR Code e envie campanhas em tempo real.
+                <p style="color: var(--text-muted); font-size: 1rem;">
+                    Transforme qualquer monitor ou Smart TV em um painel digital. Conecte seu celular via QR Code ou token e envie campanhas em tempo real.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto pt-4">
+            <div class="grid-2" style="margin-top: 1rem;">
                 <!-- TV Card -->
-                <div onclick="selectRole('tv')" class="group relative bg-slate-900 border border-slate-800 hover:border-brand-500/50 rounded-2xl p-6 sm:p-8 transition-all duration-300 hover:shadow-2xl hover:shadow-brand-500/10 cursor-pointer flex flex-col justify-between">
-                    <div class="absolute top-0 right-0 transform translate-x-2 -translate-y-2">
-                        <span class="bg-brand-500 text-slate-950 font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow">Receptor</span>
+                <div onclick="window.selectRole('tv')" class="card" style="cursor: pointer; position: relative; transition: all 0.3s;" onmouseover="this.style.borderColor='#10b981'" onmouseout="this.style.borderColor='#334155'">
+                    <div style="position: absolute; top: -10px; right: 20px; background: var(--accent); color: #020617; font-weight: 700; font-size: 0.7rem; padding: 0.25rem 0.75rem; border-radius: 999px; text-transform: uppercase;">
+                        Receptor
                     </div>
-                    <div>
-                        <div class="w-14 h-14 rounded-xl bg-brand-500/10 text-brand-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-tv"></i>
+                    <div style="display: flex; flex-direction: column; height: 100%; justify-content: space-between; gap: 2rem;">
+                        <div>
+                            <div style="width: 3.5rem; height: 3.5rem; border-radius: 0.75rem; background: rgba(16,185,129,0.1); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.25rem;">
+                                <i class="fa-solid fa-tv"></i>
+                            </div>
+                            <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Modo Tela / TV</h2>
+                            <p style="color: var(--text-muted); font-size: 0.875rem; line-height: 1.5;">
+                                Abra este modo na TV ou monitor corporativo. O sistema exibirá o QR Code e o token exclusivo para pareamento.
+                            </p>
                         </div>
-                        <h2 class="text-xl font-bold text-white mb-2">Modo Tela / TV</h2>
-                        <p class="text-slate-400 text-sm leading-relaxed">
-                            Abra este modo na sua TV, monitor ou tablet corporativo. O sistema gerará um QR Code exclusivo para pareamento instantâneo.
-                        </p>
-                    </div>
-                    <div class="mt-8 flex items-center text-brand-400 font-medium text-sm group-hover:translate-x-1 transition-transform">
-                        <span>Iniciar Tela</span>
-                        <i class="fa-solid fa-arrow-right ml-2"></i>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--accent); font-weight: 600; font-size: 0.875rem;">
+                            <span>Iniciar Tela</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Controller Card -->
-                <div onclick="selectRole('controller')" class="group relative bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-2xl p-6 sm:p-8 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 cursor-pointer flex flex-col justify-between">
-                    <div class="absolute top-0 right-0 transform translate-x-2 -translate-y-2">
-                        <span class="bg-blue-500 text-slate-950 font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow">Transmissor</span>
+                <div onclick="window.selectRole('controller')" class="card" style="cursor: pointer; position: relative; transition: all 0.3s;" onmouseover="this.style.borderColor='#3b82f6'" onmouseout="this.style.borderColor='#334155'">
+                    <div style="position: absolute; top: -10px; right: 20px; background: #3b82f6; color: #fff; font-weight: 700; font-size: 0.7rem; padding: 0.25rem 0.75rem; border-radius: 999px; text-transform: uppercase;">
+                        Transmissor
                     </div>
-                    <div>
-                        <div class="w-14 h-14 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-mobile-screen-button"></i>
+                    <div style="display: flex; flex-direction: column; height: 100%; justify-content: space-between; gap: 2rem;">
+                        <div>
+                            <div style="width: 3.5rem; height: 3.5rem; border-radius: 0.75rem; background: rgba(59,130,246,0.1); color: #3b82f6; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.25rem;">
+                                <i class="fa-solid fa-mobile-screen-button"></i>
+                            </div>
+                            <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Modo Celular / Controle</h2>
+                            <p style="color: var(--text-muted); font-size: 0.875rem; line-height: 1.5;">
+                                Use seu smartphone para conectar-se à tela digitando o código e enviar anúncios e campanhas instantaneamente.
+                            </p>
                         </div>
-                        <h2 class="text-xl font-bold text-white mb-2">Modo Celular / Controle</h2>
-                        <p class="text-slate-400 text-sm leading-relaxed">
-                            Use seu smartphone para parear com a tela através da leitura do QR Code ou inserção manual do código de 6 dígitos.
-                        </p>
-                    </div>
-                    <div class="mt-8 flex items-center text-blue-400 font-medium text-sm group-hover:translate-x-1 transition-transform">
-                        <span>Abrir Controle</span>
-                        <i class="fa-solid fa-arrow-right ml-2"></i>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; color: #3b82f6; font-weight: 600; font-size: 0.875rem;">
+                            <span>Abrir Controle</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- VIEW: TV / RECEIVER -->
-        <div id="view-tv" class="hidden flex-1 flex flex-col items-center justify-center relative w-full h-full min-h-[70vh]">
-            <!-- Waiting Screen (QR Code & Token) -->
-            <div id="tv-waiting" class="text-center space-y-6 max-w-md mx-auto p-8 rounded-3xl bg-slate-900 border border-slate-800 glow-effect">
-                <div class="inline-flex p-3 rounded-2xl bg-brand-500/10 text-brand-400 text-xl">
+        <div id="view-tv" class="hidden" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; width: 100%; min-height: 70vh;">
+            <!-- Waiting Screen with Token & QR Code -->
+            <div id="tv-waiting" class="card glow-effect" style="text-align: center; max-width: 420px; width: 100%; display: flex; flex-direction: column; gap: 1.5rem; padding: 2.5rem 2rem;">
+                <div style="width: 3rem; height: 3rem; border-radius: 1rem; background: rgba(16,185,129,0.1); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; margin: 0 auto;">
                     <i class="fa-solid fa-qrcode"></i>
                 </div>
-                <div class="space-y-2">
-                    <h2 class="text-2xl font-bold text-white">Conecte sua Tela</h2>
-                    <p class="text-slate-400 text-sm">Escaneie o QR Code abaixo com a câmera do celular ou digite o código de acesso.</p>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                    <h2 style="font-size: 1.5rem; font-weight: 700;">Conecte sua Tela</h2>
+                    <p style="color: var(--text-muted); font-size: 0.875rem;">Escaneie o QR Code abaixo com a câmera do celular ou digite o código de acesso.</p>
                 </div>
                 
-                <div class="bg-white p-4 rounded-2xl inline-block shadow-lg" id="qrcode-container">
-                    <!-- QR Code Rendered Here -->
+                <div id="qrcode-container" style="background: #fff; padding: 1rem; border-radius: 1rem; display: inline-block; margin: 0 auto; box-shadow: 0 10px 25px rgba(0,0,0,0.3);"></div>
+
+                <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em;">Código de Acesso</span>
+                    <div id="tv-token-display" style="font-size: 2.25rem; font-family: monospace; font-weight: 700; letter-spacing: 0.2em; color: var(--accent);">------</div>
                 </div>
 
-                <div class="space-y-1">
-                    <span class="text-xs text-slate-500 uppercase tracking-widest font-semibold">Código de Acesso</span>
-                    <div id="tv-token-display" class="text-3xl font-mono font-bold tracking-widest text-brand-400">------</div>
-                </div>
-
-                <div class="pt-2 flex justify-center space-x-4">
-                    <button onclick="switchMode('home')" class="px-4 py-2 text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition">
-                        <i class="fa-solid fa-arrow-left mr-1"></i> Voltar ao Menu
+                <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 0.5rem;">
+                    <button onclick="window.switchMode('home')" class="btn btn-secondary" style="font-size: 0.75rem;">
+                        <i class="fa-solid fa-arrow-left"></i> Voltar
                     </button>
-                    <button onclick="regenerateToken()" class="px-4 py-2 text-xs bg-brand-600 hover:bg-brand-500 text-white font-medium rounded-lg transition">
-                        <i class="fa-solid fa-rotate mr-1"></i> Novo Código
+                    <button onclick="window.regenerateToken()" class="btn btn-primary" style="font-size: 0.75rem;">
+                        <i class="fa-solid fa-rotate"></i> Novo Código
                     </button>
                 </div>
             </div>
 
-            <!-- Active Player Display (Fullscreen Ad) -->
-            <div id="tv-player" class="hidden absolute inset-0 bg-black flex flex-col items-center justify-center overflow-hidden">
-                <div id="player-content" class="w-full h-full flex flex-col items-center justify-center p-6 relative">
-                    <!-- Dynamic Media Content Injected Here -->
-                </div>
-                <!-- Floating Disconnect / Status Bar for TV -->
-                <div class="absolute bottom-6 left-6 bg-slate-900/80 backdrop-blur border border-slate-800 px-4 py-2 rounded-xl flex items-center space-x-3 text-xs text-slate-300 shadow-xl">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                    <span>Exibindo Anúncios em Tempo Real</span>
-                    <button onclick="disconnectTvSession()" class="ml-4 text-red-400 hover:text-red-300 font-medium underline">Desconectar</button>
+            <!-- Active Fullscreen Ad Player -->
+            <div id="tv-player" class="hidden" style="position: absolute; inset: 0; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden;">
+                <div id="player-content" style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; position: relative;"></div>
+                <div style="position: absolute; bottom: 1.5rem; left: 1.5rem; background: rgba(15,23,42,0.85); backdrop-filter: blur(8px); border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 0.75rem; display: flex; align-items: center; gap: 0.75rem; font-size: 0.75rem; color: var(--text-main);">
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background-color: var(--accent); animation: pulse 1.5s infinite;"></span>
+                    <span>Exibindo Anúncio em Tempo Real</span>
+                    <button onclick="window.disconnectTvSession()" class="btn btn-danger" style="padding: 0.25rem 0.5rem; font-size: 0.7rem; margin-left: 0.5rem;">Desconectar</button>
                 </div>
             </div>
         </div>
 
-        <!-- VIEW: CONTROLLER / SENDER -->
-        <div id="view-controller" class="hidden space-y-6 max-w-2xl mx-auto w-full">
-            <!-- Connection Step -->
-            <div id="controller-connect-card" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
-                <div class="flex items-center justify-between border-b border-slate-800 pb-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-lg">
+        <div id="view-controller" class="hidden" style="max-width: 650px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; gap: 1.5rem;">
+            <!-- Connection Card -->
+            <div id="controller-connect-card" class="card" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div style="width: 2.5rem; height: 2.5rem; border-radius: 0.75rem; background: rgba(59,130,246,0.1); color: #3b82f6; display: flex; align-items: center; justify-content: center;">
                             <i class="fa-solid fa-link"></i>
                         </div>
                         <div>
-                            <h2 class="text-lg font-bold text-white">Pareamento de Dispositivo</h2>
-                            <p class="text-xs text-slate-400">Insira o token exibido na tela ou use a câmera</p>
+                            <h2 style="font-size: 1.1rem; font-weight: 700;">Pareamento de Dispositivo</h2>
+                            <p style="font-size: 0.75rem; color: var(--text-muted);">Insira o token exibido na TV</p>
                         </div>
                     </div>
-                    <button onclick="switchMode('home')" class="text-slate-400 hover:text-white text-sm">
-                        <i class="fa-solid fa-xmark text-lg"></i>
-                    </button>
+                    <button onclick="window.switchMode('home')" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.25rem;"><i class="fa-solid fa-xmark"></i></button>
                 </div>
 
-                <div class="space-y-4">
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
                     <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-2 uppercase tracking-wider">Token da Tela (6 dígitos)</label>
-                        <div class="flex space-x-2">
-                            <input type="text" id="token-input" maxlength="6" placeholder="EX: 482910" class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white font-mono tracking-widest text-center text-lg focus:outline-none focus:border-brand-500 uppercase">
-                            <button onclick="connectToTv()" class="bg-brand-600 hover:bg-brand-500 text-white px-6 rounded-xl font-medium transition shadow-lg shadow-brand-500/20">
-                                Conectar
-                            </button>
+                        <label class="label">Token da Tela (6 dígitos)</label>
+                        <div style="display: flex; gap: 0.75rem;">
+                            <input type="text" id="token-input" maxlength="6" placeholder="EX: 482910" class="input" style="font-family: monospace; font-size: 1.25rem; letter-spacing: 0.2em; text-align: center; text-transform: uppercase;">
+                            <button onclick="window.connectToTv()" class="btn btn-primary" style="white-space: nowrap;">Conectar</button>
                         </div>
-                    </div>
-                    <div class="flex items-center justify-between pt-2">
-                        <span class="text-xs text-slate-500">Dica: Você pode abrir a TV em outra aba do navegador para testar.</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Dashboard / Media Manager (Active Controller) -->
-            <div id="controller-dashboard" class="hidden space-y-6">
-                <!-- Connected Header Banner -->
-                <div class="bg-slate-900 border border-emerald-500/30 rounded-2xl p-4 sm:p-6 flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
+            <!-- Controller Active Dashboard -->
+            <div id="controller-dashboard" class="hidden" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div class="card" style="display: flex; align-items: center; justify-content: space-between; border-color: rgba(16,185,129,0.3); padding: 1.25rem 1.5rem;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <span style="width: 10px; height: 10px; border-radius: 50%; background-color: var(--accent);"></span>
                         <div>
-                            <span class="text-xs text-slate-400 uppercase tracking-widest block font-semibold">Status</span>
-                            <span class="text-white font-medium text-sm sm:text-base">Conectado à Tela <span id="active-token-label" class="font-mono text-brand-400"></span></span>
+                            <span class="label" style="margin-bottom: 0;">Status de Conexão</span>
+                            <span style="font-weight: 600; font-size: 0.95rem;">Conectado à Tela <span id="active-token-label" style="font-family: monospace; color: var(--accent);"></span></span>
                         </div>
                     </div>
-                    <button onclick="disconnectController()" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 px-3 py-1.5 rounded-lg text-xs font-medium transition border border-red-500/20">
-                        Desconectar
-                    </button>
+                    <button onclick="window.disconnectController()" class="btn btn-danger" style="font-size: 0.75rem;">Desconectar</button>
                 </div>
 
-                <!-- Tabs for Media Selection -->
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6">
-                    <div class="flex border-b border-slate-800 pb-4 space-x-4">
-                        <button onclick="switchTab('presets')" id="tab-btn-presets" class="pb-2 font-medium text-sm border-b-2 border-brand-500 text-white transition">Anúncios Prontos</button>
-                        <button onclick="switchTab('custom')" id="tab-btn-custom" class="pb-2 font-medium text-sm border-b-2 border-transparent text-slate-400 hover:text-white transition">Criar Anúncio / URL</button>
+                <!-- Tabs & Media Management -->
+                <div class="card" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div style="display: flex; border-bottom: 1px solid var(--border); gap: 1.5rem; padding-bottom: 1rem;">
+                        <button onclick="window.switchTab('presets')" id="tab-btn-presets" style="background: none; border: none; color: #fff; font-weight: 600; font-size: 0.9rem; cursor: pointer; border-bottom: 2px solid var(--accent); padding-bottom: 0.25rem;">Anúncios Prontos</button>
+                        <button onclick="window.switchTab('custom')" id="tab-btn-custom" style="background: none; border: none; color: var(--text-muted); font-weight: 600; font-size: 0.9rem; cursor: pointer; border-bottom: 2px solid transparent; padding-bottom: 0.25rem;">Criar Anúncio Customizado</button>
                     </div>
 
-                    <!-- TAB 1: PRESETS -->
-                    <div id="tab-presets" class="space-y-4">
-                        <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Selecione uma campanha pré-cadastrada:</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <!-- Preset 1 -->
-                            <div onclick="sendPresetAd('promo')" class="bg-slate-950 border border-slate-800 hover:border-brand-500 rounded-xl p-4 cursor-pointer transition group">
-                                <div class="h-32 rounded-lg bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center text-white text-3xl mb-3 shadow-inner group-hover:scale-[1.02] transition-transform">
+                    <!-- PRESETS TAB -->
+                    <div id="tab-presets" style="display: flex; flex-direction: column; gap: 1rem;">
+                        <span style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em;">Selecione uma campanha para transmissão imediata:</span>
+                        <div class="grid-2">
+                            <div onclick="window.sendPresetAd('promo')" class="card" style="cursor: pointer; padding: 1rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                                <div style="height: 100px; border-radius: 0.5rem; background: linear-gradient(135deg, #7c3aed, #4f46e5); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.5rem; margin-bottom: 0.75rem;">
                                     <i class="fa-solid fa-tags"></i>
                                 </div>
-                                <h4 class="font-bold text-white text-sm">Super Liquidação</h4>
-                                <p class="text-xs text-slate-400 mt-1">Ofertas imperdíveis por tempo limitado.</p>
+                                <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.25rem;">Super Liquidação</h4>
+                                <p style="font-size: 0.75rem; color: var(--text-muted);">Descontos de até 50% em toda a loja.</p>
                             </div>
-                            <!-- Preset 2 -->
-                            <div onclick="sendPresetAd('coffee')" class="bg-slate-950 border border-slate-800 hover:border-brand-500 rounded-xl p-4 cursor-pointer transition group">
-                                <div class="h-32 rounded-lg bg-gradient-to-tr from-amber-600 to-orange-700 flex items-center justify-center text-white text-3xl mb-3 shadow-inner group-hover:scale-[1.02] transition-transform">
+                            <div onclick="window.sendPresetAd('coffee')" class="card" style="cursor: pointer; padding: 1rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                                <div style="height: 100px; border-radius: 0.5rem; background: linear-gradient(135deg, #d97706, #c2410c); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.5rem; margin-bottom: 0.75rem;">
                                     <i class="fa-solid fa-mug-hot"></i>
                                 </div>
-                                <h4 class="font-bold text-white text-sm">Cafeteria Gourmet</h4>
-                                <p class="text-xs text-slate-400 mt-1">O melhor café artesanal da região.</p>
+                                <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.25rem;">Cafeteria Gourmet</h4>
+                                <p style="font-size: 0.75rem; color: var(--text-muted);">O melhor espresso e grãos selecionados.</p>
                             </div>
-                            <!-- Preset 3 -->
-                            <div onclick="sendPresetAd('tech')" class="bg-slate-950 border border-slate-800 hover:border-brand-500 rounded-xl p-4 cursor-pointer transition group">
-                                <div class="h-32 rounded-lg bg-gradient-to-tr from-cyan-600 to-blue-700 flex items-center justify-center text-white text-3xl mb-3 shadow-inner group-hover:scale-[1.02] transition-transform">
+                            <div onclick="window.sendPresetAd('tech')" class="card" style="cursor: pointer; padding: 1rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                                <div style="height: 100px; border-radius: 0.5rem; background: linear-gradient(135deg, #0891b2, #2563eb); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.5rem; margin-bottom: 0.75rem;">
                                     <i class="fa-solid fa-laptop-code"></i>
                                 </div>
-                                <h4 class="font-bold text-white text-sm">Inovação Tech</h4>
-                                <p class="text-xs text-slate-400 mt-1">Soluções digitais para o seu negócio.</p>
+                                <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.25rem;">Inovação Tech</h4>
+                                <p style="font-size: 0.75rem; color: var(--text-muted);">Soluções digitais e automação em nuvem.</p>
                             </div>
-                            <!-- Preset 4 -->
-                            <div onclick="sendPresetAd('restaurant')" class="bg-slate-950 border border-slate-800 hover:border-brand-500 rounded-xl p-4 cursor-pointer transition group">
-                                <div class="h-32 rounded-lg bg-gradient-to-tr from-rose-600 to-red-700 flex items-center justify-center text-white text-3xl mb-3 shadow-inner group-hover:scale-[1.02] transition-transform">
+                            <div onclick="window.sendPresetAd('restaurant')" class="card" style="cursor: pointer; padding: 1rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                                <div style="height: 100px; border-radius: 0.5rem; background: linear-gradient(135deg, #e11d48, #9f1239); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.5rem; margin-bottom: 0.75rem;">
                                     <i class="fa-solid fa-utensils"></i>
                                 </div>
-                                <h4 class="font-bold text-white text-sm">Menu Executivo</h4>
-                                <p class="text-xs text-slate-400 mt-1">Almoço especial todos os dias.</p>
+                                <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.25rem;">Menu Executivo</h4>
+                                <p style="font-size: 0.75rem; color: var(--text-muted);">Almoço especial todos os dias.</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- TAB 2: CUSTOM AD -->
-                    <div id="tab-custom" class="hidden space-y-4">
-                        <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Criar Anúncio Customizado</h3>
-                        <div class="space-y-3">
+                    <!-- CUSTOM AD TAB -->
+                    <div id="tab-custom" class="hidden" style="display: flex; flex-direction: column; gap: 1rem;">
+                        <span style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em;">Criar Anúncio Personalizado:</span>
+                        <div style="display: flex; flex-direction: column; gap: 0.85rem;">
                             <div>
-                                <label class="block text-xs text-slate-400 mb-1">Título do Anúncio</label>
-                                <input type="text" id="custom-title" placeholder="Ex: Promoção de Inauguração" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500">
+                                <label class="label">Título do Anúncio</label>
+                                <input type="text" id="custom-title" placeholder="Ex: Inauguração Oficial" class="input">
                             </div>
                             <div>
-                                <label class="block text-xs text-slate-400 mb-1">Subtítulo / Descrição</label>
-                                <input type="text" id="custom-subtitle" placeholder="Ex: Descontos de até 50% em toda a loja" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500">
+                                <label class="label">Subtítulo / Descrição</label>
+                                <input type="text" id="custom-subtitle" placeholder="Ex: Venha conhecer nossa nova unidade" class="input">
                             </div>
                             <div>
-                                <label class="block text-xs text-slate-400 mb-1">URL da Imagem de Fundo (Opcional)</label>
-                                <input type="text" id="custom-image" placeholder="https://exemplo.com/imagem.jpg" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500">
+                                <label class="label">URL da Imagem de Fundo (Opcional)</label>
+                                <input type="text" id="custom-image" placeholder="https://exemplo.com/foto.jpg" class="input">
                             </div>
-                            <div class="grid grid-cols-2 gap-3">
+                            <div class="grid-2">
                                 <div>
-                                    <label class="block text-xs text-slate-400 mb-1">Cor de Fundo</label>
-                                    <select id="custom-bg-color" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500">
-                                        <option value="from-slate-900 via-indigo-950 to-slate-950">Azul Noite</option>
-                                        <option value="from-emerald-950 via-slate-900 to-slate-950">Verde Esmeralda</option>
-                                        <option value="from-rose-950 via-slate-900 to-slate-950">Vermelho Luxo</option>
-                                        <option value="from-amber-950 via-slate-900 to-slate-950">Dourado Premium</option>
+                                    <label class="label">Cor de Fundo</label>
+                                    <select id="custom-bg-color" class="input">
+                                        <option value="linear-gradient(135deg, #0f172a, #311042)">Azul Noite / Roxo</option>
+                                        <option value="linear-gradient(135deg, #064e3b, #022c22)">Verde Esmeralda</option>
+                                        <option value="linear-gradient(135deg, #4c0519, #881337)">Vermelho Vinho</option>
+                                        <option value="linear-gradient(135deg, #78350f, #451a03)">Dourado Premium</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-xs text-slate-400 mb-1">Ícone Destaque</label>
-                                    <select id="custom-icon" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500">
+                                    <label class="label">Ícone Destaque</label>
+                                    <select id="custom-icon" class="input">
                                         <option value="fa-bullhorn">Megafone</option>
                                         <option value="fa-star">Estrela</option>
                                         <option value="fa-heart">Coração</option>
@@ -301,9 +432,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <button onclick="sendCustomAd()" class="w-full mt-4 bg-brand-600 hover:bg-brand-500 text-white font-medium py-3 rounded-xl transition shadow-lg shadow-brand-500/20 flex items-center justify-center space-x-2">
-                                <i class="fa-solid fa-paper-plane"></i>
-                                <span>Enviar Anúncio para a Tela</span>
+                            <button onclick="window.sendCustomAd()" class="btn btn-primary" style="margin-top: 0.5rem; padding: 0.85rem;">
+                                <i class="fa-solid fa-paper-plane"></i> Enviar Anúncio para a Tela
                             </button>
                         </div>
                     </div>
@@ -314,119 +444,68 @@
     </main>
 
     <!-- HELP MODAL -->
-    <div id="help-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-                <h3 class="font-bold text-white text-lg flex items-center space-x-2">
-                    <i class="fa-solid fa-circle-question text-brand-400"></i>
-                    <span>Como Funciona o Sistema</span>
+    <div id="help-modal" class="hidden" style="position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 1rem;">
+        <div class="card" style="max-width: 500px; width: 100%; display: flex; flex-direction: column; gap: 1rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem;">
+                <h3 style="font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; color: var(--accent);">
+                    <i class="fa-solid fa-circle-question"></i> Como Funciona o Sistema
                 </h3>
-                <button onclick="closeHelpModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <button onclick="window.closeHelpModal()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.25rem;"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="space-y-3 text-sm text-slate-300 leading-relaxed">
-                <p><strong>1. Na TV / Monitor:</strong> Selecione "Modo Tela / TV". O sistema criará um código único de 6 dígitos e um QR Code em tempo real.</p>
-                <p><strong>2. No Celular / Tablet:</strong> Abra o site em outro dispositivo (ou aba anônima), selecione "Modo Celular / Controle" e digite o código da tela.</p>
-                <p><strong>3. Distribuição Instantânea:</strong> Escolha um anúncio pronto ou crie um banner customizado. A tela exibirá a campanha imediatamente em tela cheia.</p>
+            <div style="font-size: 0.875rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.75rem; line-height: 1.6;">
+                <p><strong style="color: #fff;">1. Na TV / Monitor:</strong> Selecione o <span style="color: var(--accent);">Modo Tela / TV</span>. O sistema gerará um código de 6 dígitos e um QR Code interativo.</p>
+                <p><strong style="color: #fff;">2. No Celular / Tablet:</strong> Abra o app em outro dispositivo ou aba anônima, selecione o <span style="color: #3b82f6;">Modo Celular / Controle</span> e informe o código da tela.</p>
+                <p><strong style="color: #fff;">3. Distribuição Instantânea:</strong> Escolha um anúncio pronto ou crie um banner customizado. A tela exibirá a campanha na mesma hora em tela cheia.</p>
             </div>
-            <div class="pt-2 text-right">
-                <button onclick="closeHelpModal()" class="bg-brand-600 hover:bg-brand-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition">Entendi</button>
+            <div style="text-align: right; margin-top: 0.5rem;">
+                <button onclick="window.closeHelpModal()" class="btn btn-primary" style="font-size: 0.75rem;">Entendi</button>
             </div>
         </div>
     </div>
 
-    <!-- CUSTOM TOAST NOTIFICATION -->
-    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
-
-    <!-- Firebase SDK Scripts -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // Global Firebase handles
-        window.firebaseApp = null;
-        window.db = null;
-        window.auth = null;
-        window.currentUser = null;
-
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'adscreen-sync-demo';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-            apiKey: "AIzaSyDemoKeyForAdScreenSyncPlatform",
-            authDomain: "adscreen-sync.firebaseapp.com",
-            projectId: "adscreen-sync",
-            storageBucket: "adscreen-sync.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123456789:web:abcdef"
-        };
-
-        async function initFirebase() {
-            try {
-                window.firebaseApp = initializeApp(firebaseConfig);
-                window.db = getFirestore(window.firebaseApp);
-                window.auth = getAuth(window.firebaseApp);
-
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(window.auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(window.auth);
-                }
-
-                window.currentUser = window.auth.currentUser || { uid: 'anon-' + Math.random().toString(36).substring(2, 9) };
-                
-                document.getElementById('auth-dot').className = 'w-2 h-2 rounded-full bg-emerald-500';
-                document.getElementById('auth-text').innerText = 'Online';
-                console.log("Firebase initialized successfully with user:", window.currentUser.uid);
-            } catch (error) {
-                console.error("Firebase init error:", error);
-                document.getElementById('auth-dot').className = 'w-2 h-2 rounded-full bg-red-500';
-                document.getElementById('auth-text').innerText = 'Modo Offline (Simulado)';
-            }
-        }
-
-        initFirebase();
-    </script>
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="toast-box"></div>
 
     <script>
-        // App State
-        let currentRole = 'home'; // 'home', 'tv', 'controller'
+        // Global Application State
+        let currentRole = 'home';
         let currentToken = '';
-        let unsubscribeTvListener = null;
-        let qrCodeInstance = null;
+        let syncInterval = null;
+        let qrInstance = null;
 
-        // Preset Ad Definitions
         const presetAds = {
             promo: {
                 title: "SUPER LIQUIDAÇÃO DE FIM DE SEMANA",
                 subtitle: "Descontos imperdíveis de até 50% em toda a nossa linha de produtos. Aproveite agora!",
-                bgColor: "from-purple-950 via-slate-900 to-slate-950",
+                bg: "linear-gradient(135deg, #4c1d95, #312e81)",
                 icon: "fa-tags",
                 badge: "OFERTA RELÂMPAGO"
             },
             coffee: {
                 title: "CAFETERIA GOURMET ARTESANAL",
                 subtitle: "Venha saborear o melhor espresso da cidade com grãos 100% selecionados e torra fresca.",
-                bgColor: "from-amber-950 via-slate-900 to-slate-950",
+                bg: "linear-gradient(135deg, #78350f, #451a03)",
                 icon: "fa-mug-hot",
                 badge: "NOVIDADE NO CARDÁPIO"
             },
             tech: {
                 title: "SOLUÇÕES DIGITAIS & IA",
                 subtitle: "Modernize a gestão da sua empresa com automação inteligente e alta performance em nuvem.",
-                bgColor: "from-cyan-950 via-slate-900 to-slate-950",
+                bg: "linear-gradient(135deg, #164e63, #1e3a8a)",
                 icon: "fa-laptop-code",
                 badge: "TECNOLOGIA CORPORATIVA"
             },
             restaurant: {
                 title: "MENU EXECUTIVO ESPECIAL",
                 subtitle: "Pratos elaborados por chefs renomados com ingredientes frescos e excelente custo-benefício.",
-                bgColor: "from-rose-950 via-slate-900 to-slate-950",
+                bg: "linear-gradient(135deg, #881337, #4c0519)",
                 icon: "fa-utensils",
                 badge: "ALMOÇO DIÁRIO"
             }
         };
 
-        // Navigation between modes
-        function switchMode(role) {
+        // Attach functions to global window to avoid any ReferenceError
+        window.switchMode = function(role) {
             currentRole = role;
             document.getElementById('view-home').classList.add('hidden');
             document.getElementById('view-tv').classList.add('hidden');
@@ -434,7 +513,7 @@
 
             if (role === 'home') {
                 document.getElementById('view-home').classList.remove('hidden');
-                cleanupTvSession();
+                stopTvSync();
             } else if (role === 'tv') {
                 document.getElementById('view-tv').classList.remove('hidden');
                 initTvRole();
@@ -443,287 +522,223 @@
                 document.getElementById('controller-connect-card').classList.remove('hidden');
                 document.getElementById('controller-dashboard').classList.add('hidden');
             }
-        }
+        };
 
-        // TV Role Setup
-        async function initTvRole() {
-            generateNewToken();
+        window.selectRole = function(role) {
+            window.switchMode(role);
+        };
+
+        function initTvRole() {
+            window.regenerateToken();
             document.getElementById('tv-waiting').classList.remove('hidden');
             document.getElementById('tv-player').classList.add('hidden');
+            startTvSync();
+        }
 
-            // Render QR Code
+        window.regenerateToken = function() {
+            currentToken = Math.floor(100000 + Math.random() * 900000).toString();
+            document.getElementById('tv-token-display').innerText = currentToken;
+
             const qrContainer = document.getElementById('qrcode-container');
             qrContainer.innerHTML = '';
-            
-            // Generate pairing URL pointing to controller mode with token
             const pairingUrl = `${window.location.origin}${window.location.pathname}?token=${currentToken}`;
             
             if (typeof QRCode !== 'undefined') {
-                qrCodeInstance = new QRCode(qrContainer, {
+                qrInstance = new QRCode(qrContainer, {
                     text: pairingUrl,
-                    width: 180,
-                    height: 180,
+                    width: 170,
+                    height: 170,
                     colorDark: "#000000",
                     colorLight: "#ffffff",
                     correctLevel: QRCode.CorrectLevel.H
                 });
             } else {
-                qrContainer.innerHTML = `<div class="text-xs text-black p-4 font-mono">Token: ${currentToken}</div>`;
+                qrContainer.innerHTML = `<div style="font-size:0.8rem; color:#000; font-family:monospace;">Token: ${currentToken}</div>`;
             }
+            window.showToast("Novo código gerado com sucesso!", "info");
+        };
 
-            document.getElementById('tv-token-display').innerText = currentToken;
-
-            // Start listening for incoming ads on this token
-            listenToTvChannel(currentToken);
-        }
-
-        function generateNewToken() {
-            currentToken = Math.floor(100000 + Math.random() * 900000).toString();
-            if (qrCodeInstance) {
-                const pairingUrl = `${window.location.origin}${window.location.pathname}?token=${currentToken}`;
-                qrCodeInstance.makeCode(pairingUrl);
-                document.getElementById('tv-token-display').innerText = currentToken;
-            }
-        }
-
-        function regenerateToken() {
-            if (unsubscribeTvListener) unsubscribeTvListener();
-            initTvRole();
-            showToast("Novo código gerado com sucesso!", "info");
-        }
-
-        // Firebase Firestore TV Listener
-        function listenToTvChannel(token) {
-            if (!window.db) {
-                // Fallback simulation if offline
-                console.warn("Firestore not ready, running local broadcast simulation");
-                return;
-            }
-
-            try {
-                const { doc, onSnapshot, setDoc } = window.FirebaseFirestore || {};
-                // Using public collection per strict rule 1: /artifacts/{appId}/public/data/screens
-                const appId = typeof __app_id !== 'undefined' ? __app_id : 'adscreen-sync-demo';
-                const screenRef = window.FirebaseFirestore ? window.FirebaseFirestore.doc(window.db, 'artifacts', appId, 'public', 'data', 'screens_' + token) : null;
-                
-                // Initialize screen document
-                window.setDoc(window.FirebaseFirestore.doc(window.db, 'artifacts', appId, 'public', 'data', 'screens_' + token), {
-                    token: token,
-                    activeAd: null,
-                    updatedAt: new Date().toISOString()
-                }, { merge: true }).catch(err => console.error(err));
-
-                unsubscribeTvListener = window.FirebaseFirestore.onSnapshot(screenRef, (docSnap) => {
-                    if (docSnap.exists()) {
-                        const data = docSnap.data();
-                        if (data.activeAd) {
-                            renderTvAd(data.activeAd);
-                        }
+        function startTvSync() {
+            stopTvSync();
+            syncInterval = setInterval(() => {
+                if (!currentToken) return;
+                const activeAdData = localStorage.getItem('ad_screen_' + currentToken);
+                if (activeAdData) {
+                    try {
+                        const adObj = JSON.parse(activeAdData);
+                        renderTvAd(adObj);
+                    } catch (e) {
+                        console.error("Parse error", e);
                     }
-                }, (error) => {
-                    console.error("Snapshot error:", error);
-                });
-            } catch (e) {
-                console.error("Error setting up Firestore listener:", e);
+                }
+            }, 1000);
+        }
+
+        function stopTvSync() {
+            if (syncInterval) {
+                clearInterval(syncInterval);
+                syncInterval = null;
             }
         }
 
-        // Render Fullscreen Ad on TV
         function renderTvAd(ad) {
             document.getElementById('tv-waiting').classList.add('hidden');
             const player = document.getElementById('tv-player');
             player.classList.remove('hidden');
 
-            const contentContainer = document.getElementById('player-content');
-            
-            let bgClass = ad.bgColor || "from-slate-900 via-indigo-950 to-slate-950";
+            const content = document.getElementById('player-content');
+            let bgStyle = ad.bg || "linear-gradient(135deg, #0f172a, #1e1b4b)";
+
             if (ad.imageUrl) {
-                contentContainer.innerHTML = `
-                    <div class="absolute inset-0 bg-cover bg-center filter brightness-50" style="background-image: url('${ad.imageUrl}')"></div>
-                    <div class="relative z-10 text-center max-w-4xl mx-auto space-y-6 p-8 animate-fade-in">
-                        ${ad.badge ? `<span class="bg-brand-500 text-slate-950 font-extrabold text-xs sm:text-sm px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg">${ad.badge}</span>` : ''}
-                        <h1 class="text-4xl sm:text-7xl font-black text-white tracking-tight drop-shadow-lg">${ad.title}</h1>
-                        <p class="text-xl sm:text-2xl text-slate-200 font-medium max-w-2xl mx-auto drop-shadow">${ad.subtitle}</p>
+                content.innerHTML = `
+                    <div style="position: absolute; inset:0; background-image: url('${ad.imageUrl}'); background-size: cover; background-position: center; filter: brightness(0.4);"></div>
+                    <div style="position: relative; z-index: 10; text-align: center; max-width: 900px; padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem;">
+                        ${ad.badge ? `<span style="background: var(--accent); color: #020617; font-weight: 800; font-size: 0.85rem; padding: 0.35rem 1rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.1em; display: inline-block; margin: 0 auto;">${ad.badge}</span>` : ''}
+                        <h1 style="font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 900; line-height: 1.1; text-shadow: 0 4px 20px rgba(0,0,0,0.8);">${ad.title}</h1>
+                        <p style="font-size: clamp(1.1rem, 2.5vw, 1.75rem); color: #e2e8f0; max-width: 700px; margin: 0 auto; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">${ad.subtitle}</p>
                     </div>
                 `;
             } else {
-                contentContainer.innerHTML = `
-                    <div class="absolute inset-0 bg-gradient-to-br ${bgClass}"></div>
-                    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px]"></div>
-                    <div class="relative z-10 text-center max-w-4xl mx-auto space-y-8 p-8 animate-fade-in">
-                        <div class="w-24 h-24 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 text-brand-400 flex items-center justify-center text-5xl mx-auto shadow-2xl glow-effect">
+                content.innerHTML = `
+                    <div style="position: absolute; inset:0; background: ${bgStyle};"></div>
+                    <div style="position: absolute; inset:0; opacity: 0.08; background-image: radial-gradient(#10b981 1.5px, transparent 1.5px); background-size: 28px 28px;"></div>
+                    <div style="position: relative; z-index: 10; text-align: center; max-width: 900px; padding: 2rem; display: flex; flex-direction: column; gap: 2rem; animation: fadeIn 0.5s ease-out;">
+                        <div style="width: 6rem; height: 6rem; border-radius: 1.5rem; background: rgba(255,255,255,0.1); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 3rem; margin: 0 auto; box-shadow: 0 20px 40px rgba(0,0,0,0.4);" class="glow-effect">
                             <i class="fa-solid ${ad.icon || 'fa-bullhorn'}"></i>
                         </div>
-                        ${ad.badge ? `<span class="inline-block bg-brand-500/20 border border-brand-500/50 text-brand-300 font-bold text-xs sm:text-sm px-4 py-1.5 rounded-full uppercase tracking-widest">${ad.badge}</span>` : ''}
-                        <h1 class="text-4xl sm:text-6xl font-black text-white tracking-tight leading-tight">${ad.title}</h1>
-                        <p class="text-lg sm:text-2xl text-slate-300 font-normal max-w-3xl mx-auto leading-relaxed">${ad.subtitle}</p>
+                        ${ad.badge ? `<span style="background: rgba(16,185,129,0.2); border: 1px solid rgba(16,185,129,0.5); color: #34d399; font-weight: 700; font-size: 0.85rem; padding: 0.35rem 1rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.1em; display: inline-block; margin: 0 auto;">${ad.badge}</span>` : ''}
+                        <h1 style="font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 900; line-height: 1.1; letter-spacing: -0.02em;">${ad.title}</h1>
+                        <p style="font-size: clamp(1.1rem, 2.5vw, 1.75rem); color: var(--text-muted); max-width: 800px; margin: 0 auto; line-height: 1.5;">${ad.subtitle}</p>
                     </div>
                 `;
             }
         }
 
-        function disconnectTvSession() {
-            cleanupTvSession();
-            switchMode('home');
-            showToast("Sessão da TV encerrada.", "info");
-        }
-
-        function cleanupTvSession() {
-            if (unsubscribeTvListener) {
-                unsubscribeTvListener();
-                unsubscribeTvListener = null;
+        window.disconnectTvSession = function() {
+            stopTvSync();
+            if (currentToken) {
+                localStorage.removeItem('ad_screen_' + currentToken);
             }
-        }
+            window.switchMode('home');
+            window.showToast("Sessão da TV encerrada.", "info");
+        };
 
-        // Controller Pairing & Actions
-        async function connectToTv() {
-            const tokenInput = document.getElementById('token-input').value.trim().toUpperCase();
-            if (tokenInput.length !== 6) {
-                showToast("Por favor, insira um token válido de 6 dígitos.", "error");
+        window.connectToTv = function() {
+            const val = document.getElementById('token-input').value.trim().toUpperCase();
+            if (val.length !== 6) {
+                window.showToast("Por favor, digite um token válido de 6 dígitos.", "error");
                 return;
             }
+            currentToken = val;
+            document.getElementById('controller-connect-card').classList.add('hidden');
+            document.getElementById('controller-dashboard').classList.remove('hidden');
+            document.getElementById('active-token-label').innerText = `#${currentToken}`;
+            window.showToast("Conectado com sucesso à tela!", "success");
+        };
 
-            currentToken = tokenInput;
-            
-            // Verify if screen exists or bind directly
-            try {
-                if (window.db) {
-                    const appId = typeof __app_id !== 'undefined' ? __app_id : 'adscreen-sync-demo';
-                    const screenRef = window.FirebaseFirestore.doc(window.db, 'artifacts', appId, 'public', 'data', 'screens_' + tokenInput);
-                    const docSnap = await window.FirebaseFirestore.getDoc(screenRef);
-                    
-                    if (!docSnap.exists()) {
-                        // Create it so connection works even if TV started slightly differently
-                        await window.FirebaseFirestore.setDoc(screenRef, { token: tokenInput, createdAt: new Date().toISOString() }, { merge: true });
-                    }
-                }
-
-                document.getElementById('controller-connect-card').classList.add('hidden');
-                document.getElementById('controller-dashboard').classList.remove('hidden');
-                document.getElementById('active-token-label').innerText = `#${currentToken}`;
-                showToast("Conectado com sucesso à tela!", "success");
-            } catch (err) {
-                console.error("Connection error:", err);
-                showToast("Erro ao conectar com a tela. Verifique o token.", "error");
-            }
-        }
-
-        function disconnectController() {
+        window.disconnectController = function() {
             document.getElementById('controller-connect-card').classList.remove('hidden');
             document.getElementById('controller-dashboard').classList.add('hidden');
             document.getElementById('token-input').value = '';
-            showToast("Desconectado da tela.", "info");
-        }
+            currentToken = '';
+            window.showToast("Desconectado da tela.", "info");
+        };
 
-        function switchTab(tab) {
+        window.switchTab = function(tab) {
             if (tab === 'presets') {
                 document.getElementById('tab-presets').classList.remove('hidden');
                 document.getElementById('tab-custom').classList.add('hidden');
-                document.getElementById('tab-btn-presets').className = "pb-2 font-medium text-sm border-b-2 border-brand-500 text-white transition";
-                document.getElementById('tab-btn-custom').className = "pb-2 font-medium text-sm border-b-2 border-transparent text-slate-400 hover:text-white transition";
+                document.getElementById('tab-btn-presets').style.borderColor = "var(--accent)";
+                document.getElementById('tab-btn-presets').style.color = "#fff";
+                document.getElementById('tab-btn-custom').style.borderColor = "transparent";
+                document.getElementById('tab-btn-custom').style.color = "var(--text-muted)";
             } else {
                 document.getElementById('tab-presets').classList.add('hidden');
                 document.getElementById('tab-custom').classList.remove('hidden');
-                document.getElementById('tab-btn-custom').className = "pb-2 font-medium text-sm border-b-2 border-brand-500 text-white transition";
-                document.getElementById('tab-btn-presets').className = "pb-2 font-medium text-sm border-b-2 border-transparent text-slate-400 hover:text-white transition";
+                document.getElementById('tab-btn-custom').style.borderColor = "var(--accent)";
+                document.getElementById('tab-btn-custom').style.color = "#fff";
+                document.getElementById('tab-btn-presets').style.borderColor = "transparent";
+                document.getElementById('tab-btn-presets').style.color = "var(--text-muted)";
             }
-        }
+        };
 
-        async function sendPresetAd(presetKey) {
-            const adData = presetAds[presetKey];
-            await transmitAdToScreen(adData);
-        }
+        window.sendPresetAd = function(key) {
+            const ad = presetAds[key];
+            transmitAd(ad);
+        };
 
-        async function sendCustomAd() {
+        window.sendCustomAd = function() {
             const title = document.getElementById('custom-title').value.trim();
             const subtitle = document.getElementById('custom-subtitle').value.trim();
             const imageUrl = document.getElementById('custom-image').value.trim();
-            const bgColor = document.getElementById('custom-bg-color').value;
+            const bg = document.getElementById('custom-bg-color').value;
             const icon = document.getElementById('custom-icon').value;
 
             if (!title) {
-                showToast("Por favor, informe ao menos o título do anúncio.", "error");
+                window.showToast("Informe ao menos o título do anúncio.", "error");
                 return;
             }
 
-            const adData = {
+            const ad = {
                 title: title,
-                subtitle: subtitle || "Anúncio especial desenvolvido para você.",
-                imageUrl: imageUrl || "",
-                bgColor: bgColor,
+                subtitle: subtitle || "Campanha desenvolvida sob medida.",
+                imageUrl: imageUrl,
+                bg: bg,
                 icon: icon,
                 badge: "CAMPANHA AO VIVO"
             };
 
-            await transmitAdToScreen(adData);
-        }
+            transmitAd(ad);
+        };
 
-        async function transmitAdToScreen(adData) {
+        function transmitAd(ad) {
             if (!currentToken) {
-                showToast("Nenhuma tela conectada.", "error");
+                window.showToast("Nenhuma tela conectada.", "error");
                 return;
             }
-
             try {
-                if (window.db && window.FirebaseFirestore) {
-                    const appId = typeof __app_id !== 'undefined' ? __app_id : 'adscreen-sync-demo';
-                    const screenRef = window.FirebaseFirestore.doc(window.db, 'artifacts', appId, 'public', 'data', 'screens_' + currentToken);
-                    
-                    await window.FirebaseFirestore.setDoc(screenRef, {
-                        activeAd: adData,
-                        updatedAt: new Date().toISOString()
-                    }, { merge: true });
-                    
-                    showToast("Anúncio enviado para a tela com sucesso!", "success");
-                } else {
-                    // Local fallback simulation
-                    showToast("Anúncio disparado (Modo Simulação Local)", "success");
-                }
-            } catch (err) {
-                console.error("Error transmitting ad:", err);
-                showToast("Erro ao transmitir anúncio.", "error");
+                localStorage.setItem('ad_screen_' + currentToken, JSON.stringify(ad));
+                window.showToast("Anúncio transmitido com sucesso para a tela!", "success");
+            } catch (e) {
+                console.error(e);
+                window.showToast("Erro ao transmitir anúncio.", "error");
             }
         }
 
-        // Help Modal Controls
-        function openHelpModal() {
+        window.openHelpModal = function() {
             document.getElementById('help-modal').classList.remove('hidden');
-        }
-        function closeHelpModal() {
-            document.getElementById('help-modal').classList.add('hidden');
-        }
+        };
 
-        // Toast Notification System
-        function showToast(message, type = 'success') {
+        window.closeHelpModal = function() {
+            document.getElementById('help-modal').classList.add('hidden');
+        };
+
+        window.showToast = function(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
             
-            let bgColors = type === 'success' ? 'bg-emerald-600 text-white' : type === 'error' ? 'bg-red-600 text-white' : 'bg-slate-800 text-slate-200 border border-slate-700';
+            let bg = type === 'success' ? '#065f46' : type === 'error' ? '#991b1b' : '#1e293b';
             let icon = type === 'success' ? 'fa-circle-check' : type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-info';
+            let color = type === 'success' ? '#34d399' : type === 'error' ? '#f87171' : '#38bdf8';
 
-            toast.className = `${bgColors} px-4 py-3 rounded-xl shadow-xl flex items-center space-x-3 text-sm font-medium transition-all transform translate-y-2 opacity-0 pointer-events-auto`;
-            toast.innerHTML = `<i class="fa-solid ${icon} text-lg"></i><span>${message}</span>`;
+            toast.className = 'toast';
+            toast.style.backgroundColor = bg;
+            toast.style.color = '#fff';
+            toast.style.border = '1px solid rgba(255,255,255,0.1)';
+            toast.innerHTML = `<i class="fa-solid ${icon}" style="color: ${color}; font-size: 1.1rem;"></i><span>${message}</span>`;
             
             container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3500);
+        };
 
-            setTimeout(() => {
-                toast.classList.remove('translate-y-2', 'opacity-0');
-            }, 10);
-
-            setTimeout(() => {
-                toast.classList.add('translate-y-2', 'opacity-0');
-                setTimeout(() => toast.remove(), 300);
-            }, 3500);
-        }
-
-        // Auto-detect token from URL parameter if opened via QR scan
+        // Auto-detect token parameter on load for QR Code scans
         window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const tokenParam = urlParams.get('token');
+            const params = new URLSearchParams(window.location.search);
+            const tokenParam = params.get('token');
             if (tokenParam) {
-                switchMode('controller');
+                window.switchMode('controller');
                 document.getElementById('token-input').value = tokenParam;
-                connectToTv();
+                window.connectToTv();
             }
         });
     </script>
