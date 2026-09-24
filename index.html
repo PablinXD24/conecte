@@ -88,15 +88,15 @@
             cursor: pointer;
             transition: all 0.2s ease;
             border: none;
+            touch-action: manipulation;
         }
         .btn-primary {
             background-color: var(--accent);
             color: #020617;
         }
-        .btn-primary:hover {
+        .btn-primary:hover, .btn-primary:active {
             background-color: var(--accent-hover);
             color: #fff;
-            transform: translateY(-1px);
         }
         .btn-secondary {
             background-color: var(--bg-card);
@@ -110,9 +110,6 @@
             background-color: rgba(239, 68, 68, 0.1);
             color: #f87171;
             border: 1px solid rgba(239, 68, 68, 0.2);
-        }
-        .btn-danger:hover {
-            background-color: rgba(239, 68, 68, 0.2);
         }
         .card {
             background-color: var(--bg-secondary);
@@ -219,7 +216,7 @@
                     Distribuição Instantânea de <span style="background: linear-gradient(90deg, #34d399, #6ee7b7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Anúncios em Telas</span>
                 </h1>
                 <p style="color: var(--text-muted); font-size: 1rem;">
-                    Transforme qualquer monitor em um painel digital. Conecte seu celular via QR Code ou token e envie campanhas em tempo real com pareamento ultra-rápido.
+                    Transforme qualquer monitor em um painel digital. Conecte seu celular via QR Code ou token e envie campanhas em tempo real.
                 </p>
             </div>
 
@@ -236,7 +233,7 @@
                             </div>
                             <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Modo Tela / TV</h2>
                             <p style="color: var(--text-muted); font-size: 0.875rem; line-height: 1.5;">
-                                Abra na Smart TV ou monitor. Exibe o QR Code e token exclusivo para pareamento em tempo real.
+                                Abra na Smart TV ou monitor. Exibe o QR Code e token exclusivo para pareamento.
                             </p>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--accent); font-weight: 600; font-size: 0.875rem;">
@@ -258,7 +255,7 @@
                             </div>
                             <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Modo Celular / Controle</h2>
                             <p style="color: var(--text-muted); font-size: 0.875rem; line-height: 1.5;">
-                                Use seu smartphone para conectar-se à tela digitando o código e enviar anúncios e campanhas instantaneamente.
+                                Use seu smartphone para conectar-se à tela digitando o código e enviar campanhas instantaneamente.
                             </p>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem; color: #3b82f6; font-weight: 600; font-size: 0.875rem;">
@@ -272,14 +269,13 @@
 
         <!-- TV VIEW -->
         <div id="view-tv" class="hidden" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; width: 100%; min-height: 70vh;">
-            <!-- Waiting Screen with Token & QR Code -->
             <div id="tv-waiting" class="card glow-effect" style="text-align: center; max-width: 420px; width: 100%; display: flex; flex-direction: column; gap: 1.5rem; padding: 2.5rem 2rem;">
                 <div style="width: 3rem; height: 3rem; border-radius: 1rem; background: rgba(16,185,129,0.1); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; margin: 0 auto;">
                     <i class="fa-solid fa-qrcode"></i>
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                     <h2 style="font-size: 1.5rem; font-weight: 700;">Conecte sua Tela</h2>
-                    <p style="color: var(--text-muted); font-size: 0.875rem;">Escaneie o QR Code abaixo com a câmera do celular ou digite o código de acesso.</p>
+                    <p style="color: var(--text-muted); font-size: 0.875rem;">Escaneie o QR Code abaixo com a câmera do celular ou digite o código.</p>
                 </div>
                 
                 <div id="qrcode-container" style="background: #fff; padding: 1rem; border-radius: 1rem; display: inline-block; margin: 0 auto; box-shadow: 0 10px 25px rgba(0,0,0,0.3);"></div>
@@ -303,7 +299,7 @@
             <!-- Active Fullscreen Ad Player -->
             <div id="tv-player" class="hidden" style="position: absolute; inset: 0; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden;">
                 <div id="player-content" style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; position: relative;"></div>
-                <div style="position: absolute; bottom: 1.5rem; left: 1.5rem; background: rgba(15,23,42,0.85); backdrop-filter: blur(8px); border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 0.75rem; display: flex; align-items: center; gap: 0.75rem; font-size: 0.75rem; color: var(--text-main);">
+                <div style="position: absolute; bottom: 1.5rem; left: 1.5rem; background: rgba(15,23,42,0.85); backdrop-filter: blur(8px); border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 0.75rem; display: flex; align-items: center; gap: 0.75rem; font-size: 0.75rem; color: var(--text-main); z-index: 20;">
                     <span style="width: 8px; height: 8px; border-radius: 50%; background-color: var(--accent);"></span>
                     <span>TV Conectada & Exibindo Campanha</span>
                     <button onclick="window.disconnectTvSession()" class="btn btn-danger" style="padding: 0.25rem 0.5rem; font-size: 0.7rem; margin-left: 0.5rem;">Desconectar</button>
@@ -322,7 +318,7 @@
                         </div>
                         <div>
                             <h2 style="font-size: 1.1rem; font-weight: 700;">Pareamento de Dispositivo</h2>
-                            <p style="font-size: 0.75rem; color: var(--text-muted);">Insira o token de 4 ou 6 dígitos exibido na TV</p>
+                            <p style="font-size: 0.75rem; color: var(--text-muted);">Insira o token de 4 dígitos exibido na TV</p>
                         </div>
                     </div>
                     <button onclick="window.switchMode('home')" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.25rem;"><i class="fa-solid fa-xmark"></i></button>
@@ -466,8 +462,7 @@
     <div id="toast-container" class="toast-box"></div>
 
     <script>
-        // --- REAL-TIME HYBRID SYNC ENGINE ---
-        // Uses public Firebase Realtime Database demo namespace + BroadcastChannel fallback for multi-device sync
+        // --- MULTI-CHANNEL SYNC ENGINE (FIREBASE + LOCALSTORAGE FALLBACK) ---
         let dbRef = null;
         let broadcastChannel = null;
         let currentRole = 'home';
@@ -505,7 +500,6 @@
             }
         };
 
-        // Initialize Firebase with public test database & BroadcastChannel fallback
         function initSyncEngine() {
             try {
                 const firebaseConfig = {
@@ -519,11 +513,12 @@
                 document.getElementById('sync-text').innerText = "Sincronização em Nuvem Ativa";
                 document.getElementById('sync-dot').style.backgroundColor = "#10b981";
             } catch (e) {
-                console.warn("Firebase fallback mode active:", e);
+                console.warn("Modo de contingência local ativado:", e);
                 firebaseInitialized = false;
+                document.getElementById('sync-text').innerText = "Modo Local / Fallback Ativo";
+                document.getElementById('sync-dot').style.backgroundColor = "#f59e0b";
             }
 
-            // Setup BroadcastChannel for local/same-network real-time sync
             if (window.BroadcastChannel) {
                 broadcastChannel = new BroadcastChannel('adscreen_sync_channel');
                 broadcastChannel.onmessage = (event) => {
@@ -531,7 +526,6 @@
                 };
             }
 
-            // Also listen to Storage events for robust multi-tab support
             window.addEventListener('storage', (e) => {
                 if (e.key && e.key.startsWith('ad_screen_')) {
                     try {
@@ -545,27 +539,31 @@
         }
 
         function publishData(token, payload) {
-            // 1. Save to LocalStorage / BroadcastChannel
+            // 1. Grava no LocalStorage imediato
             localStorage.setItem('ad_screen_' + token, JSON.stringify(payload));
+            
+            // 2. Dispara pelo BroadcastChannel
             if (broadcastChannel) {
                 broadcastChannel.postMessage({ token: token, payload: payload });
             }
-            // 2. Save to Firebase if online
+
+            // 3. Tenta salvar no Firebase Realtime Database
             if (firebaseInitialized && dbRef) {
-                dbRef.child(token).set(payload).catch(err => console.error("Firebase publish error:", err));
+                dbRef.child(token).set(payload).catch(err => {
+                    console.warn("Falha no envio via Firebase, operando via armazenamento local:", err);
+                });
             }
         }
 
         function listenToData(token, callback) {
-            // 1. Poll localStorage & BroadcastChannel
+            // Verifica local storage a cada 250ms para garantir resposta imediata em celulares
             const checkInterval = setInterval(() => {
                 const val = localStorage.getItem('ad_screen_' + token);
                 if (val) {
                     try { callback(JSON.parse(val)); } catch(e){}
                 }
-            }, 300);
+            }, 250);
 
-            // 2. Listen to Firebase real-time events
             let fbListener = null;
             if (firebaseInitialized && dbRef) {
                 fbListener = dbRef.child(token);
@@ -591,7 +589,6 @@
             }
         }
 
-        // Global Navigation & Mode Switching
         window.switchMode = function(role) {
             currentRole = role;
             document.getElementById('view-home').classList.add('hidden');
@@ -627,7 +624,7 @@
             activeListenerUnsub = listenToData(currentToken, (adObj) => {
                 renderTvAd(adObj);
                 const statusEl = document.getElementById('pairing-status-text');
-                if (statusEl) statusEl.innerText = "Celular conectado com sucesso!";
+                if (statusEl) statusEl.innerText = "Campanha recebida e ativa!";
             });
         }
 
@@ -773,12 +770,12 @@
 
         function transmitAd(ad) {
             if (!currentToken) {
-                window.showToast("Nenhuma tela conectada.", "error");
+                window.showToast("Nenhuma tela conectada. Digite o código.", "error");
                 return;
             }
             try {
                 publishData(currentToken, ad);
-                window.showToast("Anúncio transmitido com sucesso para a tela!", "success");
+                window.showToast("Anúncio transmitido com sucesso!", "success");
             } catch (e) {
                 console.error(e);
                 window.showToast("Erro ao transmitir anúncio.", "error");
@@ -811,7 +808,6 @@
             setTimeout(() => toast.remove(), 3500);
         };
 
-        // Initialize sync engine and check URL parameters on load
         window.addEventListener('DOMContentLoaded', () => {
             initSyncEngine();
             const params = new URLSearchParams(window.location.search);
